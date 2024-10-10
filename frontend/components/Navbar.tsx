@@ -1,16 +1,18 @@
 import React from "react";
 import { Button } from "./Button";
+import Link from "next/link";
 
 const Navbar = () => {
   return (
-    <div>
-      <nav className="flex bg-gradient-to-r from-gray-800  via-slate-900  to-zinc-900 sticky justify-between shadow-lg py-3 px-5">
-        <div className="flex gap-5">
-          <h1 className="text-xl text-white">Logo</h1>
-          <h1 className="text-xl text-white">KotaKita</h1>
-        </div>
+    <div className="sticky top-0 w-full">
+      <nav className="flex items-center bg-slate-800 sticky justify-between shadow-lg py-3 px-5">
         <div>
-          <Button>Log in</Button>
+          <h1 className="text-white font-semibold text-lg">Kotakita</h1>
+        </div>
+        <div className="flex items-center">
+          <Link href="/login">
+            <Button>Log in</Button>
+          </Link>
         </div>
       </nav>
     </div>
