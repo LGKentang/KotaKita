@@ -10,10 +10,10 @@ class CreateUpdatesTable extends Migration
     {
         Schema::create('updates', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('ProjectID')->constrained('projects')->onDelete('cascade');
-            $table->text('Description');
-            $table->date('UpdateDate');
-            $table->decimal('Progress', 5, 2);
+            $table->foreignId('project_id')->constrained('projects')->onDelete('cascade');
+            $table->text('description');
+            $table->date('update_date');
+            $table->decimal('progress', 5, 2);
             $table->timestamps();
         });
     }

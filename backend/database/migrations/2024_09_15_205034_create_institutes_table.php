@@ -9,7 +9,7 @@ class CreateInstitutesTable extends Migration
     public function up()
     {
         Schema::create('institutes', function (Blueprint $table) {
-            $table->id();
+            $table->id();   
             $table->string('name');
             $table->string('contact_number');
             $table->timestamps();

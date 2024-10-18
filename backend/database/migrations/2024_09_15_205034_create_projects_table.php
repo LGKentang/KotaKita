@@ -12,6 +12,7 @@ class CreateProjectsTable extends Migration
             $table->id();
             $table->string('name');
             $table->text('description');
+            $table->foreignId('institute_id')->constrained('institutes')->onDelete('cascade');
             $table->date('start_date');
             $table->date('end_date')->nullable();
             $table->decimal('budget', 15, 2);
