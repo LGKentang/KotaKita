@@ -10,6 +10,7 @@ class CreateVotesTable extends Migration
     {
         Schema::create('votes', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); 
             $table->enum('vote_type', ['upvote', 'downvote']);
             $table->foreignId('petition_id')->constrained('petitions')->onDelete('cascade');
             $table->timestamps();
