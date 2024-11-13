@@ -2,10 +2,24 @@
 import React, { useState } from "react";
 import { FaGlobe, FaCity, FaRocket } from 'react-icons/fa'; // import icons from react-icons
 
-const Institute = () => {
-  const [selectedInstitute, setSelectedInstitute] = useState(null);
+interface Project {
+  id: number;
+  name: string;
+  description: string;
+}
 
-  const institutes = [
+interface Institute {
+  id: number;
+  name: string;
+  description: string;
+  logo: JSX.Element;
+  projects: Project[];
+}
+
+const InstituteComponent: React.FC = () => {
+  const [selectedInstitute, setSelectedInstitute] = useState<Institute | null>(null);
+
+  const institutes: Institute[] = [
     {
       id: 1,
       name: "Global Health Institute",
@@ -52,7 +66,7 @@ const Institute = () => {
     },
   ];
 
-  const handleInstituteClick = (institute) => {
+  const handleInstituteClick = (institute: Institute) => {
     setSelectedInstitute(institute);
   };
 
@@ -106,4 +120,4 @@ const Institute = () => {
   );
 };
 
-export default Institute;
+export default InstituteComponent;
