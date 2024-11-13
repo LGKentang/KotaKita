@@ -9,7 +9,10 @@ const Navbar = () => {
         <div>
           <h1 className="text-white font-semibold text-lg">Kotakita</h1>
         </div>
-        <div className="flex items-center">
+        <div className="flex items-center gap-5">
+          <Link href={"/createpetition"}>
+            <Button>Create Petition</Button>
+          </Link>
           <Link href="/login">
             <Button>Log in</Button>
           </Link>

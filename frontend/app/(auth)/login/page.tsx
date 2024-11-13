@@ -1,46 +1,49 @@
-import { Button } from "@/components/Button";
-import React from "react";
-import Image from "next/image";
+import { Button } from '@/components/Button';
+import { Input } from '@/components/Input';
+import React from 'react';
+import Image from 'next/image';
+
+const LOGO_SIZE = 240 as const;
 
 export default function Login() {
   return (
-    <>
-      <div className="flex justify-center items-center bg-white h-screen">
+    <div className="grid h-screen w-screen bg-white md:grid-cols-2">
+      <div className="relative hidden md:block">
         <Image
           src="/assets/city.jpg"
           alt="city"
-          width={500}
-          height={500}
-          className="h-full object-cover w-1/2 overflow-hidden"
+          className="object-cover"
+          fill
         />
-        <form className="flex flex-col p-10 w-1/2  justify-between gap-10">
-          <div className="flex justify-center pr-20">
-            <Image
-              src="/assets/logo-kotakita.svg"
-              alt="logo"
-              width={400}
-              height={400}
-            />
+      </div>
+      <div className="flex flex-col items-center justify-center">
+        <Image
+          src="/assets/logo-kotakita.svg"
+          alt="logo"
+          width={LOGO_SIZE}
+          height={LOGO_SIZE}
+        />
+        <form className="flex w-full max-w-lg flex-col justify-between gap-4 px-5 py-8">
+          <div className="flex flex-col">
+            <label className="mb-1" htmlFor="username">
+              Username
+            </label>
+            <Input id="username" type="text" />
           </div>
-          <div className="flex flex-col ">
-            <label className="">Username</label>
-            <input
-              type="text"
-              className="rounded-lg border-2 border-black focus:outline-none"
-            />
+          <div className="flex flex-col">
+            <label htmlFor="password" className="mb-1">
+              Password
+            </label>
+            <Input id="password" type="password" />
           </div>
-          <div className="flex flex-col ">
-            <label>Password</label>
-            <input
-              type="password"
-              className="rounded-lg border-2 border-black focus:outline-none"
-            />
-          </div>
-          <Button className="border-2 border-black hover:border-white shadow-md hover:shadow-md">
+          <Button
+            type="submit"
+            className="mt-4 border-2 border-black shadow-md hover:border-white hover:shadow-md"
+          >
             Submit
           </Button>
         </form>
       </div>
-    </>
+    </div>
   );
 }
