@@ -2,9 +2,9 @@ import React from 'react';
 import Image from 'next/image';
 import { Post } from '@/libs/types/post.type';
 import { User } from '@/libs/types/user.type';
-import { Button } from '@/components/Button';
+import { Button } from '@/components/shared/Button';
 import Link from 'next/link';
-import { Carousel } from '@/components/Carousel';
+import { Carousel } from '@/components/shared/Carousel';
 
 const users: User[] = [
   { id: 1, email: 'alice@example.com' },
@@ -61,7 +61,6 @@ const Home = () => {
         </Link>
       </div>
       <div>
-        <h1></h1>
         <Carousel post={posts} />
       </div>
     </main>

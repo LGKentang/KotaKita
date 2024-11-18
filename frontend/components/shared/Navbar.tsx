@@ -5,11 +5,11 @@ import Link from 'next/link';
 const Navbar = () => {
   return (
     <div className="sticky top-0 z-50 w-full bg-slate-900 shadow-md">
-      <nav className="flex items-center justify-between bg-slate-900 px-6 py-4 md:px-12">
+      <nav className="flex items-center justify-between bg-slate-900 px-6 py-2 md:px-12">
         {/* Logo Section */}
         <div>
           <a href="/">
-            <h1 className="text-2xl font-semibold text-white sm:text-3xl">
+            <h1 className="text-2xl font-semibold text-white sm:text-xl">
               Kotakita
             </h1>
           </a>
@@ -19,28 +19,28 @@ const Navbar = () => {
         <div className="flex items-center space-x-6">
           {/* Home Link */}
           <Link href="/" passHref>
-            <span className="cursor-pointer text-lg text-white transition duration-200 ease-in-out hover:text-blue-400">
+            <span className="text-md cursor-pointer text-white transition duration-200 ease-in-out hover:text-blue-400">
               Home
             </span>
           </Link>
 
           {/* Petitions Link */}
           <Link href="/petitions" passHref>
-            <span className="cursor-pointer text-lg text-white transition duration-200 ease-in-out hover:text-blue-400">
+            <span className="text-md cursor-pointer text-white transition duration-200 ease-in-out hover:text-blue-400">
               Petitions
             </span>
           </Link>
 
           {/* Projects Link */}
           <Link href="/projects" passHref>
-            <span className="cursor-pointer text-lg text-white transition duration-200 ease-in-out hover:text-blue-400">
+            <span className="text-md cursor-pointer text-white transition duration-200 ease-in-out hover:text-blue-400">
               Projects
             </span>
           </Link>
 
           {/* Institutes Link */}
           <Link href="/institutes" passHref>
-            <span className="cursor-pointer text-lg text-white transition duration-200 ease-in-out hover:text-blue-400">
+            <span className="text-md cursor-pointer text-white transition duration-200 ease-in-out hover:text-blue-400">
               Institutes
             </span>
           </Link>
