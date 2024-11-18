@@ -11,6 +11,6 @@ export interface UserProfile {
   userId: number;
 }
 
-export interface NewUser extends Omit<User, "userProfile"> {
+export interface NewUser extends Omit<User, 'userProfile' | 'id'> {
   password: string;
 }

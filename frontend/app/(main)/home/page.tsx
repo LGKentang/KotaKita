@@ -1,152 +1,70 @@
-import React from "react";
-import Link from "next/link";
+import React from 'react';
+import Image from 'next/image';
+import { Post } from '@/libs/types/post.type';
+import { User } from '@/libs/types/user.type';
+import { Button } from '@/components/Button';
+import Link from 'next/link';
+import { Carousel } from '@/components/Carousel';
 
-// Sample data for ongoing petitions and projects
-const ongoingPetitions = [
-  { 
-    id: 1, 
-    title: "Petition for Climate Change Action", 
-    description: "Support the movement to fight climate change.", 
-    upvotes: 350, 
-    downvotes: 50,
-    image: "https://picsum.photos/200/300?random=1"
-  },
-  { 
-    id: 2, 
-    title: "Petition for Affordable Healthcare", 
-    description: "Make healthcare affordable for everyone.", 
-    upvotes: 500, 
-    downvotes: 30,
-    image: "https://picsum.photos/200/300?random=2"
-  },
-  { 
-    id: 3, 
-    title: "Petition for Free Education", 
-    description: "Support free education for all students.", 
-    upvotes: 1200, 
-    downvotes: 200,
-    image: "https://picsum.photos/200/300?random=3"
-  },
-  { 
-    id: 4, 
-    title: "Petition for Animal Rights", 
-    description: "Fight for the rights of animals around the world.", 
-    upvotes: 900, 
-    downvotes: 60,
-    image: "https://picsum.photos/200/300?random=4"
-  },
-  { 
-    id: 5, 
-    title: "Petition for Mental Health Awareness", 
-    description: "Help raise awareness for mental health issues.", 
-    upvotes: 450, 
-    downvotes: 50,
-    image: "https://picsum.photos/200/300?random=5"
-  },
+const users: User[] = [
+  { id: 1, email: 'alice@example.com' },
+  { id: 2, email: 'bob@example.com' },
+  { id: 3, email: 'charlie@example.com' },
 ];
 
-const ongoingProjects = [
-  { 
-    id: 1, 
-    name: "AI-based Medical Diagnosis", 
-    description: "A project to enhance medical diagnoses using AI.", 
-    currentFunding: 12444444, 
-    goalFunding: 100000000, 
-    image: "https://picsum.photos/200/300?random=6"
+// Sample data for ongoing petitions and projects
+const posts: Post[] = [
+  {
+    id: 1,
+    slug: 'clean-water-initiative',
+    title: 'Clean Water Initiative',
+    userId: 1,
+    img: 'https://img.freepik.com/free-photo/lifestyle-scene-anime-style-with-person-doing-daily-tasks_23-2151002612.jpg',
+    desc: 'A project aiming to provide clean water to underserved communities.',
+    user: users[0],
+    upvotes: [1, 2, 3, 4, 5], // Array of upvotes
   },
-  { 
-    id: 2, 
-    name: "Smart City Development", 
-    description: "A project aiming to develop smart cities with IoT.", 
-    currentFunding: 5444444, 
-    goalFunding: 100000000, 
-    image: "https://picsum.photos/200/300?random=7"
+  {
+    id: 2,
+    slug: 'environmental-awareness-campaign', // Added slug
+    title: 'Environmental Awareness Campaign',
+    userId: 2,
+    img: 'https://img.freepik.com/free-photo/autumn-night-illuminated-lantern-tree-yellow-leaf-generated-by-ai_188544-15642.jpg?t=st=1731905905~exp=1731909505~hmac=56e4a5478dd34616a972b90721f841c81428ee452d9df0cb333d29ebce70d6b0&w=1380',
+    desc: 'Educating people about the importance of protecting the environment.',
+    user: users[1], // Linking user by userId
+    upvotes: [1, 3, 5, 7], // Array of upvotes
   },
-  { 
-    id: 3, 
-    name: "Space Exploration Initiative", 
-    description: "A project focused on advancing space exploration.", 
-    currentFunding: 20000000, 
-    goalFunding: 50000000, 
-    image: "https://picsum.photos/200/300?random=8"
-  },
-  { 
-    id: 4, 
-    name: "Clean Energy Solutions", 
-    description: "A project to develop sustainable clean energy technologies.", 
-    currentFunding: 10000000, 
-    goalFunding: 200000000, 
-    image: "https://picsum.photos/200/300?random=9"
-  },
-  { 
-    id: 5, 
-    name: "Water Purification for All", 
-    description: "A project focused on bringing clean water to communities.", 
-    currentFunding: 3500000, 
-    goalFunding: 50000000, 
-    image: "https://picsum.photos/200/300?random=10"
+  {
+    id: 3,
+    slug: 'education-for-all', // Added slug
+    title: 'Education for All',
+    userId: 3,
+    img: 'https://img.freepik.com/free-photo/autumn-forest-acrylic-painting-spooky-mystery-dusk-generated-by-ai_188544-15640.jpg?t=st=1731905963~exp=1731909563~hmac=451ded3d1a30629cbb02e1f06d7f9a77ce67be188ff4624d9581423b049a119a&w=1380',
+    desc: 'A project to provide education to children in remote areas.',
+    user: users[2], // Linking user by userId
+    upvotes: [1, 2, 4], // Array of upvotes
   },
 ];
 
 const Home = () => {
   return (
-    <div className="bg-gray-100 min-h-screen py-10 flex flex-col justify-center items-center">
-      <div className="text-center mb-12">
-        <h1 className="text-4xl font-semibold text-gray-800 mb-4">Welcome to Kotakita</h1>
-        <p className="text-lg text-gray-600">
-          Empowering change through petitions and innovative projects.
-        </p>
+    <main>
+      <div className="left-0 top-0 -z-10 flex w-full flex-col items-center justify-center bg-map bg-cover bg-center bg-no-repeat py-32 shadow-md">
+        <h1
+          className="relative animate-typing overflow-hidden whitespace-nowrap border-r-4 p-5 text-center text-4xl font-bold text-black"
+          style={{ fontSize: 40 }}
+        >
+          Bersama Kita Wujudkan Perubahan Nyata
+        </h1>
+        <Link href={'/createpetition'}>
+          <Button className="mt-6 text-lg">Create Petition</Button>
+        </Link>
       </div>
-
-      <div className="container mx-auto px-4 mb-16">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-6">Ongoing Petitions</h2>
-        <div className="flex overflow-x-auto space-x-6">
-          {ongoingPetitions.map((petition) => (
-            <Link href={`/petitions/${petition.id}`} key={petition.id}>
-              <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 min-w-[280px]">
-                <img src={petition.image} alt={petition.title} className="w-full h-48 object-cover rounded-lg mb-4" />
-                <h3 className="text-xl font-semibold text-gray-800 mb-3">{petition.title}</h3>
-                <p className="text-gray-600 mb-4">{petition.description}</p>
-                <div className="flex justify-between text-sm text-gray-600">
-                  <span>Upvotes: {petition.upvotes}</span>
-                  <span>Downvotes: {petition.downvotes}</span>
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
+      <div>
+        <h1></h1>
+        <Carousel post={posts} />
       </div>
-
-      {/* Ongoing Projects Section */}
-      <div className="container mx-auto px-4">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-6">Ongoing Projects</h2>
-        <div className="flex overflow-x-auto space-x-6">
-          {ongoingProjects.map((project) => (
-            <Link href={`/projects/${project.id}`} key={project.id}>
-              <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 min-w-[280px]">
-                <img src={project.image} alt={project.name} className="w-full h-48 object-cover rounded-lg mb-4" />
-                <h3 className="text-xl font-semibold text-gray-800 mb-3">{project.name}</h3>
-                <p className="text-gray-600 mb-4">{project.description}</p>
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-sm text-gray-600">Funding Progress:</span>
-                  <span className="text-sm text-gray-600">
-                    Rp{project.currentFunding.toLocaleString()} / Rp{project.goalFunding.toLocaleString()}
-                  </span>
-                </div>
-                <div className="w-full bg-gray-200 rounded-full h-2 mb-4">
-                  <div
-                    className="h-2 rounded-full bg-blue-500"
-                    style={{
-                      width: `${(project.currentFunding / project.goalFunding) * 100}%`,
-                    }}
-                  ></div>
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </div>
-    </div>
+    </main>
   );
 };
 
