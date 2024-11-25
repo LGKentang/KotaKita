@@ -10,7 +10,7 @@ const Navbar = () => {
         <div>
           <a href="/">
             <h1 className="text-2xl font-semibold text-white sm:text-3xl">
-              Kotakita
+              KotaKita
             </h1>
           </a>
         </div>
