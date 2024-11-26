@@ -66,12 +66,6 @@ const ProjectsPage: React.FC = () => {
         },
     ];
 
-    const handleProjectClick = (id: number) => {
-        const project = projects.find((project) => project.id === id);
-        if (project) {
-            setSelectedProject(project);
-        }
-    };
 
     const truncateDescription = (description: string, maxWords: number) => {
         const words = description.split(' ');
@@ -81,12 +75,18 @@ const ProjectsPage: React.FC = () => {
         return description;
     };
 
-    // Filter projects based on the search query
+
     const filteredProjects = projects.filter(
         (project) =>
             project.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
             project.description.toLowerCase().includes(searchQuery.toLowerCase())
     );
+    const router = useRouter();
+
+    const handleProjectClick = (id: number) => {
+        router.push(`projects/${id}`)
+    };
+
 
     return (
         <div className="relative h-screen flex flex-col items-center justify-center bg-cover bg-center bg-no-repeat py-8 shadow-md"
@@ -99,7 +99,6 @@ const ProjectsPage: React.FC = () => {
 
             <h1 className="text-3xl font-bold text-white mb-8 z-10">Projects</h1>
 
-            {/* Search Input */}
             <div className="w-full max-w-4xl z-10 mb-6">
                 <input
                     type="text"
@@ -112,45 +111,45 @@ const ProjectsPage: React.FC = () => {
 
 
             <div className="w-full max-w-4xl z-10 grid grid-cols-1 sm:grid-cols-2 gap-8 px-8 py-8 bg-white bg-opacity-90 rounded-lg max-h-[75vh] overflow-y-auto">
-    {filteredProjects.length > 0 ? (
-        filteredProjects.map((project) => (
-            <div
-                key={project.id}
-                className="p-4 border rounded-md cursor-pointer bg-white transition transform hover:scale-105 hover:shadow-xl hover:bg-gray-100"
-                onClick={() => handleProjectClick(project.id)}
-            >
-                <div>
-                    <div className="mb-4">
-                        <img
-                            src={project.imageUrl}
-                            alt={project.name}
-                            className="w-full h-48 object-cover rounded-md shadow-md"
-                        />
-                    </div>
-                    <h2 className="text-xl font-semibold text-gray-900">{project.name}</h2>
-                    <p className="text-lg text-gray-700">{truncateDescription(project.description, 6)}</p>
-
-                    <p className="italic text-gray-500 mt-2">Managed by: {project.instituteName}</p>
-                </div>
-
-                <div>
-                    {/* Progress bar */}
-                    <div className="mt-4">
-                        <p className="text-gray-700">Progress: {project.progress}%</p>
-                    </div>
-                    <div className="w-full bg-gray-300 rounded-full h-2 mt-2">
+                {filteredProjects.length > 0 ? (
+                    filteredProjects.map((project) => (
                         <div
-                            className="bg-blue-500 h-2 rounded-full"
-                            style={{ width: `${project.progress}%` }}
-                        ></div>
-                    </div>
-                </div>
+                            key={project.id}
+                            className="p-4 border rounded-md cursor-pointer bg-white transition transform hover:scale-105 hover:shadow-xl hover:bg-gray-100"
+                            onClick={() => handleProjectClick(project.id)}
+                        >
+                            <div>
+                                <div className="mb-4">
+                                    <img
+                                        src={project.imageUrl}
+                                        alt={project.name}
+                                        className="w-full h-48 object-cover rounded-md shadow-md"
+                                    />
+                                </div>
+                                <h2 className="text-xl font-semibold text-gray-900">{project.name}</h2>
+                                <p className="text-lg text-gray-700">{truncateDescription(project.description, 6)}</p>
+
+                                <p className="italic text-gray-500 mt-2">Managed by: {project.instituteName}</p>
+                            </div>
+
+                            <div>
+                                {/* Progress bar */}
+                                <div className="mt-4">
+                                    <p className="text-gray-700">Progress: {project.progress}%</p>
+                                </div>
+                                <div className="w-full bg-gray-300 rounded-full h-2 mt-2">
+                                    <div
+                                        className="bg-blue-500 h-2 rounded-full"
+                                        style={{ width: `${project.progress}%` }}
+                                    ></div>
+                                </div>
+                            </div>
+                        </div>
+                    ))
+                ) : (
+                    <p className="text-center text-gray-500">No projects found.</p>
+                )}
             </div>
-        ))
-    ) : (
-        <p className="text-center text-gray-500">No projects found.</p>
-    )}
-</div>
 
         </div>
     );
