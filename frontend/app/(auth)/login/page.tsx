@@ -1,49 +1,52 @@
-import { Button } from '@/components/Button';
-import { Input } from '@/components/Input';
-import React from 'react';
-import Image from 'next/image';
+'use client';
+import AuthForm from '@/components/auth/Form';
+import { useRouter } from 'next/compat/router';
+import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
+import { useEffect } from 'react';
 
-const LOGO_SIZE = 240 as const;
+export default function Form() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  useEffect(() => {
+    if (router && !router.isReady) {
+      return;
+    }
+  }, []);
+  const tab = searchParams.get('tab');
 
-export default function Login() {
+  const defaultDesign =
+    'px-4 py-2 text-black transition-all duration-400 hover:border-b-2 hover:border-black';
+  const designChange =
+    'px-4 py-2 text-black transition-all duration-400 border-b-2 border-black';
+
   return (
-    <div className="grid h-screen w-screen bg-white md:grid-cols-2">
-      <div className="relative hidden md:block">
-        <Image
-          src="/assets/city.jpg"
-          alt="city"
-          className="object-cover"
-          fill
-        />
+    <div>
+      <div className="absolute right-0 z-10 mr-5 mt-2 flex justify-between gap-5 pt-2">
+        <Link
+          href={{
+            pathname: '/login',
+            query: { tab: '1' },
+          }}
+        >
+          <button className={`${tab === '1' ? designChange : defaultDesign}`}>
+            Login
+          </button>
+        </Link>
+        <Link
+          href={{
+            pathname: '/login',
+            query: {
+              tab: '0',
+            },
+          }}
+        >
+          <button className={`${tab === '0' ? designChange : defaultDesign}`}>
+            Register
+          </button>
+        </Link>
       </div>
-      <div className="flex flex-col items-center justify-center">
-        <Image
-          src="/assets/logo-kotakita.svg"
-          alt="logo"
-          width={LOGO_SIZE}
-          height={LOGO_SIZE}
-        />
-        <form className="flex w-full max-w-lg flex-col justify-between gap-4 px-5 py-8">
-          <div className="flex flex-col">
-            <label className="mb-1" htmlFor="username">
-              Username
-            </label>
-            <Input id="username" type="text" />
-          </div>
-          <div className="flex flex-col">
-            <label htmlFor="password" className="mb-1">
-              Password
-            </label>
-            <Input id="password" type="password" />
-          </div>
-          <Button
-            type="submit"
-            className="mt-4 border-2 border-black shadow-md hover:border-white hover:shadow-md"
-          >
-            Submit
-          </Button>
-        </form>
-      </div>
+      <AuthForm isLogin={tab == '1'} />
     </div>
   );
 }

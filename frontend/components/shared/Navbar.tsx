@@ -25,7 +25,7 @@ const Navbar = () => {
           </Link>
 
           {/* Petitions Link */}
-          <Link href="/petitions" passHref>
+          <Link href="/createpetition" passHref>
             <span className="text-md cursor-pointer text-white transition duration-200 ease-in-out hover:text-blue-400">
               Petitions
             </span>
@@ -46,7 +46,7 @@ const Navbar = () => {
           </Link>
 
           {/* Log in Button */}
-          <Link href="/login" passHref>
+          <Link href={{ pathname: '/login', query: { tab: 1 } }} passHref>
             <Button className="rounded-md px-4 py-2 text-black shadow-md transition duration-200 ease-in-out hover:bg-blue-500 hover:shadow-lg">
               Log in
             </Button>

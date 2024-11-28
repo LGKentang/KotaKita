@@ -1,7 +1,7 @@
 'use client';
 import { useState, useCallback } from 'react';
-import { Button } from '@/components/Button';
-import Dropzone from '@/components/Dropzone';
+import { Button } from '@/components/shared/Button';
+import Dropzone from '@/components/shared/Dropzone';
 import Image from 'next/image';
 
 export default function CreatePetition() {
