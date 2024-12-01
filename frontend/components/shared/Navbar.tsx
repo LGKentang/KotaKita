@@ -31,28 +31,28 @@ const Navbar = () => {
         {/* Navigation Links/Buttons */}
         <div className="flex items-center space-x-6">
           {/* Home Link */}
-          <Link href="/" passHref>
+          <Link href="/">
             <span className="text-md cursor-pointer text-white transition duration-200 ease-in-out hover:text-blue-400">
               Home
             </span>
           </Link>
 
           {/* Petitions Link */}
-          <Link href="/" passHref>
+          <Link href="/petitions">
             <span className="text-md cursor-pointer text-white transition duration-200 ease-in-out hover:text-blue-400">
               Petitions
             </span>
           </Link>
 
           {/* Projects Link */}
-          <Link href="/projects" passHref>
+          <Link href="/projects">
             <span className="text-md cursor-pointer text-white transition duration-200 ease-in-out hover:text-blue-400">
               Projects
             </span>
           </Link>
 
           {/* Institutes Link */}
-          <Link href="/institutes" passHref>
+          <Link href="/institutes">
             <span className="text-md cursor-pointer text-white transition duration-200 ease-in-out hover:text-blue-400">
               Institutes
             </span>
@@ -60,7 +60,7 @@ const Navbar = () => {
 
           {/* Log in Button */}
           {!isLogin ? (
-            <Link href={{ pathname: '/login', query: { tab: 1 } }} passHref>
+            <Link href={{ pathname: '/login', query: { tab: 1 } }}>
               <Button className="rounded-md px-4 py-2 text-black shadow-md transition duration-200 ease-in-out hover:bg-blue-500 hover:shadow-lg">
                 Log in
               </Button>
