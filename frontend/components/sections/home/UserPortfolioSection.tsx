@@ -1,43 +1,48 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { Post } from '@/libs/types/post.type';
 import { User } from '@/libs/types/user.type';
-import { Button } from '@/components/shared/Button';
-import Link from 'next/link';
 import { Project } from '@/libs/types/project.type';
-import TrendingSection, {
-  Trending,
-} from '@/components/sections/home/TrendingSection';
-import UserPortfolioSection from '@/components/sections/home/UserPortfolioSection';
-import { PageParams } from '@/libs/types/common.type';
+import { Card } from '@/components/shared/Card';
 
-const Home = ({ searchParams }: PageParams) => {
-  const trending =
-    (searchParams['trending'] as Trending | undefined) ?? Trending.POSTS;
+export default function UserPortfolioSection() {
+  const [content, setContent] = useState<Post[] | Project[]>(posts);
+  const [showPosts, setShowPosts] = useState(true);
+  const [containerRef] = useAutoAnimate();
 
-  const items = getTrendings(trending);
+  function togglePosts() {
+    setShowPosts((state) => !state);
+  }
+
+  useEffect(() => {
+    setContent(showPosts ? projects : posts);
+  }, [showPosts]);
 
   return (
-    <main className="bg-white">
-      <div className="flex w-full flex-col items-center justify-center bg-map bg-cover bg-center bg-no-repeat py-32 shadow-md">
-        <h1
-          className="relative animate-typing overflow-hidden whitespace-nowrap border-r-4 p-5 text-center text-4xl font-bold text-black"
-          style={{ fontSize: 40 }}
+    <section
+      id="user-projects"
+      className="flex flex-col items-center justify-between bg-gradient-to-r from-sky-900 to-indigo-900 py-10"
+    >
+      <div className="mb-8 flex items-center gap-2">
+        <span className="text-xl font-semibold text-white">Your </span>
+        <button
+          className="group border-b-2 border-white text-xl font-semibold text-white hover:border-blue-600 hover:bg-transparent hover:text-blue-600"
+          onClick={() => togglePosts()}
         >
-          Bersama Kita Wujudkan Perubahan Nyata
-        </h1>
-        <Link href={'/createpetition'}>
-          <Button className="mt-6 border-2 border-black text-lg">
-            Create Petition
-          </Button>
-        </Link>
+          <span className="inline-block group-hover:animate-bounce">
+            {showPosts ? 'Projects' : 'Posts'}
+          </span>
+        </button>
       </div>
-      <TrendingSection trending={trending} items={items} />
-      <UserPortfolioSection />
-    </main>
+      <div className="flex max-w-xl flex-col gap-4 px-5" ref={containerRef}>
+        {content.slice(0, 6).map((item) => (
+          <Card item={item} key={item.id} className="w-full" />
+        ))}
+      </div>
+    </section>
   );
-};
-
-function getTrendings(param: Trending) {
-  return { [Trending.POSTS]: posts, [Trending.PROJECTS]: projects }[param];
 }
 
 const users: User[] = [
@@ -122,5 +127,3 @@ const projects: Project[] = [
     upvotes: [101, 102, 103, 104], // Array of upvotes
   },
 ];
-
-export default Home;

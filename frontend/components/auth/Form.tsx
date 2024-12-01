@@ -41,7 +41,7 @@ const AuthForm = ({ isLogin }: AuthFormProps) => {
             <Input id="password" type="password" />
           </div>
           {!isLogin ? (
-            <div className="flex flex-col">
+            <div className="animation-pulse flex flex-col transition-all duration-200">
               <label htmlFor="fullname" className="mb-1">
                 Fullname
               </label>

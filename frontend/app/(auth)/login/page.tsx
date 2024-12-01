@@ -1,19 +1,14 @@
-'use client';
+import { redirect } from 'next/navigation';
 import AuthForm from '@/components/auth/Form';
-import { useRouter } from 'next/compat/router';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
-import { useEffect } from 'react';
 
-export default function Form() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  useEffect(() => {
-    if (router && !router.isReady) {
-      return;
-    }
-  }, []);
-  const tab = searchParams.get('tab');
+export default function Form({
+  searchParams,
+}: {
+  searchParams: { tab: string };
+}) {
+  const tab = searchParams.tab ?? '1';
+  if (!['0', '1'].includes(tab)) return redirect('/login');
 
   const defaultDesign =
     'px-4 py-2 text-black transition-all duration-400 hover:border-b-2 hover:border-black';

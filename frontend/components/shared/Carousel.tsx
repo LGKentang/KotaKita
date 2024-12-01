@@ -51,7 +51,10 @@ export const Carousel = ({ post }: CarouselProps) => {
       <div className="embla shadow-xl" ref={mainEmblaRef}>
         <div className="embla__container">
           {post.slice(0, 6).map((item, index) => (
-            <div key={index} className="embla__slide flex items-center gap-6">
+            <div
+              key={index}
+              className="embla__slide flex items-center gap-6 transition-all duration-300"
+            >
               {/* Image Container */}
               <div className="relative h-80 w-80 shrink-0">
                 <Image
@@ -83,9 +86,7 @@ export const Carousel = ({ post }: CarouselProps) => {
                     <p className="text-lg font-semibold">
                       {item.upvotes.length}
                     </p>
-                    <div>
-                      <h2 className="font-medium text-gray-700">Pendukung</h2>
-                    </div>
+                    <span className="font-medium text-gray-700">Pendukung</span>
                   </div>
                 </div>
               </div>

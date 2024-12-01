@@ -17,8 +17,8 @@ export default function CreatePetition() {
   }, []);
 
   return (
-    <div className="mt-4 flex flex-col items-center p-2 font-semibold text-white">
-      <form className="mt-4 flex w-1/2 flex-col gap-2 rounded-3xl bg-slate-800 p-2 shadow-xl">
+    <div className="flex flex-col items-center bg-gray-900 p-2 font-semibold text-white">
+      <form className="my-5 flex w-1/2 flex-col gap-2 rounded-3xl bg-slate-800 p-2 shadow-xl">
         <div className="flex justify-center p-3">
           <h1 className="text-4xl text-white">Create your petition</h1>
         </div>
