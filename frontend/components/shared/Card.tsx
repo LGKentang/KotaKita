@@ -1,6 +1,6 @@
 import { Post } from '@/libs/types/post.type';
 import { Project } from '@/libs/types/project.type';
-import { cn } from '@/libs/utils';
+import { cn } from '@/libs/utils/utils';
 import Image from 'next/image';
 
 export interface CardProp extends React.HTMLAttributes<HTMLDivElement> {

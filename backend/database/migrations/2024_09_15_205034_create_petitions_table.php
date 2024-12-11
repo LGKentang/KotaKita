@@ -17,6 +17,7 @@ class CreatePetitionsTable extends Migration
             $table->string('status');
             $table->integer('upvotes')->default(0);
             $table->integer('downvotes')->default(0);
+            $table->string('thumbnail_url');
             $table->timestamps();
         });
     }

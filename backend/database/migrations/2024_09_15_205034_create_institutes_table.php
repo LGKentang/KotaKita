@@ -12,6 +12,11 @@ class CreateInstitutesTable extends Migration
             $table->id();   
             $table->string('name');
             $table->string('contact_number');
+            $table->string('slogan');
+            $table->date('founded_on');
+            $table->string('impact_description');
+            $table->string('logo_url');
+            $table->string('thumbnail_url');
             $table->timestamps();
         });
     }

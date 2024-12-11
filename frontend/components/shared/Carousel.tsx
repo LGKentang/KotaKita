@@ -1,6 +1,6 @@
 'use client';
 import { Post } from '@/libs/types/post.type';
-import { cn } from '@/libs/utils';
+import { cn } from '@/libs/utils/utils';
 import Image from 'next/image';
 import useEmblaCarousel from 'embla-carousel-react';
 import React, { useEffect, useCallback, useState } from 'react';

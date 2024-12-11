@@ -16,8 +16,8 @@ class CreateProjectsTable extends Migration
             $table->date('start_date');
             $table->date('end_date')->nullable();
             $table->decimal('budget', 15, 2);
-            $table->decimal('current_progress', 5, 2);
             $table->string('status');
+            $table->string('thumbnail_url');
             $table->timestamps();
         });
     }
