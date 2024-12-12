@@ -8,14 +8,12 @@ use Illuminate\Http\JsonResponse;
 
 class PetitionController extends Controller
 {
-    // Display a listing of the petitions.
     public function index(): JsonResponse
     {
         $petitions = Petition::all();
         return response()->json($petitions);
     }
 
-    // Store a newly created petition in storage.
     public function store(Request $request): JsonResponse
     {
         $request->validate([
@@ -23,14 +21,13 @@ class PetitionController extends Controller
             'description' => 'required|string',
             'submissionDate' => 'required|date',
             'status' => 'required|string|max:50',
-            'user_id' => 'required|exists:users,id', // Assuming the user_id is required
+            'user_id' => 'required|exists:users,id', 
         ]);
 
         $petition = Petition::create($request->all());
         return response()->json($petition, 201); // 201 Created
     }
 
-    // Display the specified petition.
     public function show($id): JsonResponse
     {
         $petition = Petition::findOrFail($id);

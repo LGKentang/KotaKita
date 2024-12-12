@@ -24,6 +24,15 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
 
+Route::middleware('auth:sanctum')->get('/getUser', function (Request $request) {
+    return response()->json($request->user());
+});
+
+Route::middleware('auth:sanctum')->post('/upvote',[VoteController::class,'upvote']);
+Route::middleware('auth:sanctum')->post('/downvote',[VoteController::class,'downvote']);
+Route::middleware('auth:sanctum')->post('/comment',[CommentController::class,'comment']);
+
+
 
 Route::apiResource('institutes', InstituteController::class);
 Route::apiResource('petitions', PetitionController::class);
