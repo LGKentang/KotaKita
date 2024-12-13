@@ -22,7 +22,8 @@ class User extends Authenticatable
         'password',
         'phone_number',
         'profile_picture_url',
-        'date_of_birth'
+        'date_of_birth',
+        'institute_id'
     ];
 
     /**

@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('role')->default('user');
+            $table->foreignId('institute_id')->nullable()->default(null)->constrained('institutes')->onDelete('cascade');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('profile_picture_url')->nullable();
             $table->date('date_of_birth')->nullable();

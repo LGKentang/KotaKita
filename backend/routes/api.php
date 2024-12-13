@@ -21,16 +21,20 @@ Route::get('/users', function () {
     return User::all();
 });
 
+
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login'])->name('login');
+Route::get('/institutes/projects', [InstituteController::class, 'getInstituteProjects']);
 
 Route::middleware('auth:sanctum')->group(function () {
+    
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/upvote', [VoteController::class, 'upvote']);
     Route::post('/downvote', [VoteController::class, 'downvote']);
     Route::post('/comment', [CommentController::class, 'comment']);
-    Route::post('/updateProfile',[UserController::class,'updateProfile']);
-
+    Route::post('/updateProfile', [UserController::class, 'updateProfile']);
+    Route::post('/updateInstitute', [InstituteController::class, 'updateInstitute']);
+    
     Route::apiResource('institutes', InstituteController::class);
     Route::apiResource('petitions', PetitionController::class);
     Route::apiResource('projects', ProjectController::class);
