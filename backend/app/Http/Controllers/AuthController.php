@@ -56,19 +56,4 @@ class AuthController extends Controller
         return response()->json(['message' => 'User logged out successfully!'], 200);
     }
 
-    // In your AuthController
-
-    public function getUserFromToken(Request $request)
-    {
-        $user = Auth::user();
-
-        echo $request;
-
-        if ($user) {
-            return response()->json(['user' => $user], 200);
-        }
-
-        return response()->json(['message' => 'Unauthenticated'], 401);
-    }
-
 }
