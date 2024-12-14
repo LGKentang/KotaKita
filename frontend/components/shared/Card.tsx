@@ -1,6 +1,6 @@
 import { Post } from '@/libs/types/post.type';
 import { Project } from '@/libs/types/project.type';
-import { cn } from '@/libs/utils';
+import { cn } from '@/libs/utils/util';
 import Image from 'next/image';
 
 export interface CardProp extends React.HTMLAttributes<HTMLDivElement> {
@@ -18,7 +18,7 @@ export const Card = ({ item, className, ...props }: CardProp) => {
   return (
     <div
       className={cn(
-        'flex flex-col items-center gap-3 bg-white pb-3 shadow-lg duration-100 hover:scale-105',
+        'mb-3 flex flex-col items-center gap-3 bg-white pb-2 shadow-lg duration-100 hover:scale-105',
         className,
       )}
       {...props}
