@@ -6,6 +6,8 @@ export interface Project {
   title: string;
   userId: number;
   img: string;
+  submissionDate: string;
+  status: 'Active' | 'Pending Review' | 'Closed';
   desc: string;
   user?: User;
   upvotes: number[];

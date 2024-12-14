@@ -1,7 +1,6 @@
 import { redirect } from 'next/navigation';
 import AuthForm from '@/components/auth/Form';
 import Link from 'next/link';
-
 export default function Form({
   searchParams,
 }: {

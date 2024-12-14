@@ -13,14 +13,19 @@ type AuthFormProps = {
 
 const AuthForm = ({ isLogin }: AuthFormProps) => {
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const formData = new FormData(e.target as any);
+    try {
+      e.preventDefault();
+      const formData = new FormData(e.target as any);
 
-    if (isLogin) {
-      await login(
-        formData.get('email') as string,
-        formData.get('password') as string,
-      );
+      if (isLogin) {
+        const data = await login(
+          formData.get('email') as string,
+          formData.get('password') as string,
+        );
+        localStorage.setItem('token', data.token);
+      }
+    } catch (error) {
+      console.log(error);
     }
   }
 
@@ -59,10 +64,10 @@ const AuthForm = ({ isLogin }: AuthFormProps) => {
           </div>
           {!isLogin ? (
             <div className="animation-pulse flex flex-col transition-all duration-200">
-              <label htmlFor="fullname" className="mb-1">
-                Fullname
+              <label htmlFor="username" className="mb-1">
+                Username
               </label>
-              <Input id="fullname" type="text" />
+              <Input id="username" type="text" />
             </div>
           ) : (
             ''

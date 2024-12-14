@@ -8,7 +8,7 @@ type ModalProps = {
 
 export default function Modal({ closeModal }: ModalProps) {
   return (
-    <div className="fixed inset-0 flex h-full w-full items-center justify-center overflow-y-auto bg-gray-600 bg-opacity-50">
+    <div className="fixed inset-0 z-10 flex h-full w-full items-center justify-center overflow-y-auto bg-gray-600 bg-opacity-50">
       <div className="h-96 w-[60%] rounded-lg border bg-white p-8 shadow-lg">
         <div>
           <div className="flex justify-between px-5">

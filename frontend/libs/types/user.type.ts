@@ -1,16 +1,14 @@
 export interface User {
   id: number;
   email: string;
-  userProfile?: UserProfile;
-}
-
-export interface UserProfile {
-  id: number;
+  name: string;
+  instituteId?: number;
+  dob?: Date;
+  phoneNumber?: string;
   profilePic?: string;
-  fullName: string;
-  userId: number;
+  role?: string;
 }
 
-export interface NewUser extends Omit<User, 'userProfile' | 'id'> {
+export interface NewUser extends Omit<User, 'id'> {
   password: string;
 }
