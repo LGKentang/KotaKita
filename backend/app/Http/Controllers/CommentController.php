@@ -3,12 +3,41 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 
 class CommentController extends Controller
 {
-    // Display a listing of the comments.
+    public function comment(Request $request): JsonResponse
+    {
+        $request->validate([
+            'project_id' => 'nullable|exists:projects,id',
+            'petition_id' => 'nullable|exists:petitions,id', 
+            'message' => 'required|string', 
+        ]);
+    
+        $user = Auth::user();
+    
+        if (!$request->input('project_id') && !$request->input('petition_id')) {
+            return response()->json(['message' => 'Either project_id or petition_id must be provided.'], 400);
+        }
+
+        if ($request->input('project_id') && $request->input('petition_id')) {
+            return response()->json(['message' => 'Cannot comment on both at the same time'], 400);
+        }
+    
+        $comment = Comment::create([
+            'user_id' => $user->id,
+            'project_id' => $request->input('project_id'),
+            'petition_id' => $request->input('petition_id'), 
+            'message' => $request->input('message'),
+        ]);
+    
+        return response()->json($comment, 201); 
+    }
+    
+
     public function index(): JsonResponse
     {
         $comments = Comment::all();

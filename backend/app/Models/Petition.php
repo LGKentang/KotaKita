@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Petition extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['user_id', 'title', 'description', 'submissionDate', 'status', 'upvotes', 'downvotes', 'thumbnail_url'];
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }

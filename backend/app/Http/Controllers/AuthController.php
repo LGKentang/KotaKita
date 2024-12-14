@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Cookie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
@@ -43,15 +44,18 @@ class AuthController extends Controller
         }
 
         $user = Auth::user();
-        $token = $user->createToken('auth_token')->plainTextToken; 
+        $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json(['token' => $token, 'user' => $user], 200);
     }
 
+    
+
     // Logout API
     public function logout(Request $request)
     {
-        Auth::user()->tokens()->delete(); 
+        Auth::user()->tokens()->delete();
         return response()->json(['message' => 'User logged out successfully!'], 200);
     }
+
 }

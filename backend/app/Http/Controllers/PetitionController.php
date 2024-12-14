@@ -3,19 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\Petition;
+use App\Services\FileService;
+use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Str;
 
 class PetitionController extends Controller
 {
-    // Display a listing of the petitions.
+    
     public function index(): JsonResponse
     {
         $petitions = Petition::all();
         return response()->json($petitions);
     }
 
-    // Store a newly created petition in storage.
     public function store(Request $request): JsonResponse
     {
         $request->validate([
@@ -23,21 +25,36 @@ class PetitionController extends Controller
             'description' => 'required|string',
             'submissionDate' => 'required|date',
             'status' => 'required|string|max:50',
-            'user_id' => 'required|exists:users,id', // Assuming the user_id is required
+            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]); 
+
+        $user = Auth::user();
+
+        $thumbnailPath = null;
+        if ($request->hasFile('thumbnail')) {
+            $image = $request->file('thumbnail');
+            $fileName = Str::uuid() . '.' . $image->getClientOriginalExtension();
+            $thumbnailPath = $image->storeAs("thumbnails", $fileName, 'public');
+        }
+        
+        $petition = Petition::create([
+            'user_id' => $user->id,
+            'title' => $request->title,
+            'description' => $request->description,
+            'submissionDate' => $request->submissionDate,
+            'status' => $request->status,
+            'thumbnail_url' => $thumbnailPath,
         ]);
 
-        $petition = Petition::create($request->all());
-        return response()->json($petition, 201); // 201 Created
+        return response()->json($petition, 201);
     }
 
-    // Display the specified petition.
     public function show($id): JsonResponse
     {
         $petition = Petition::findOrFail($id);
         return response()->json($petition);
     }
 
-    // Update the specified petition in storage.
     public function update(Request $request, $id): JsonResponse
     {
         $request->validate([
@@ -45,7 +62,6 @@ class PetitionController extends Controller
             'description' => 'sometimes|required|string',
             'submissionDate' => 'sometimes|required|date',
             'status' => 'sometimes|required|string|max:50',
-            // Add other validation rules as needed
         ]);
 
         $petition = Petition::findOrFail($id);

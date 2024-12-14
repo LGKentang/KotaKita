@@ -11,7 +11,7 @@ class CreateBudgetAllocationsTable extends Migration
         Schema::create('budget_allocations', function (Blueprint $table) {
             $table->id();
             $table->foreignId('project_id')->constrained('projects')->onDelete('cascade');
-            $table->string('phase');
+            $table->string('allocation_type');
             $table->decimal('amount', 15, 2);
             $table->date('date_allocated');
             $table->timestamps();

@@ -3,37 +3,60 @@
 namespace App\Http\Controllers;
 
 use App\Models\Project;
+use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Str;
 
 class ProjectController extends Controller
 {
-    // Display a listing of the projects.
+
     public function index(): JsonResponse
     {
         $projects = Project::all();
         return response()->json($projects);
     }
 
-    // Store a newly created project in storage.
+
     public function store(Request $request): JsonResponse
     {
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
-            'institute_id' => 'required|exists:institutes,id',
             'start_date' => 'required|date',
             'end_date' => 'nullable|date|after_or_equal:start_date',
             'budget' => 'required|numeric',
-            'current_progress' => 'required|numeric|min:0|max:100',
-            'status' => 'required|string|max:50',
+            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', 
         ]);
 
-        $project = Project::create($request->all());
-        return response()->json($project, 201); // 201 Created
-    }
+        $user = Auth::user();
+        $institute_id = $user->institute_id;
 
-    // Display the specified project.
+        if ($institute_id == null) {
+            return response()->json(['error' => 'Account is not associated with an institute'], 400);
+        }
+
+        $imagePath = null;
+        if ($request->hasFile('thumbnail')) {
+            $image = $request->file('thumbnail');
+            $fileName = Str::uuid() . '.' . $image->getClientOriginalExtension();
+            $imagePath = $image->storeAs('projects', $fileName, 'public');
+        }
+
+        $project = Project::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
+            'budget' => $request->budget,
+            'status' => "Not Started",
+            'institute_id' => $institute_id,  
+            'thumbnail_url' => $imagePath,
+        ]);
+
+        return response()->json($project, 201);
+    }
+    
     public function show($id): JsonResponse
     {
         $project = Project::findOrFail($id);

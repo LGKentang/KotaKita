@@ -8,14 +8,12 @@ use Illuminate\Http\JsonResponse;
 
 class UpdateController extends Controller
 {
-    // Display a listing of the updates.
     public function index(): JsonResponse
     {
         $updates = Update::all();
         return response()->json($updates);
     }
 
-    // Store a newly created update in storage.
     public function store(Request $request): JsonResponse
     {
         $request->validate([
