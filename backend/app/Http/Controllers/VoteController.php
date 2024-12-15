@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Petition;
 use App\Models\Vote;
 use Auth;
 use Illuminate\Http\Request;
@@ -12,69 +13,117 @@ class VoteController extends Controller
     public function upvote(Request $request): JsonResponse
     {
         $request->validate([
-            'petitionId' => 'required|integer', 
+            'petitionId' => 'required|integer',
         ]);
-    
+
         $user = Auth::user();
         $petitionId = $request->input('petitionId');
-    
+
         $existingVote = Vote::where('user_id', $user->id)
             ->where('petition_id', $petitionId)
             ->first();
-    
+
         if ($existingVote) {
             if ($existingVote->vote_type === 'downvote') {
                 $existingVote->update(['vote_type' => 'upvote']);
+
+                $petition = Petition::find($petitionId);
+                $petition->increment('upvotes');
+                $petition->decrement('downvotes');
+
                 return response()->json(['message' => 'Your vote has been updated to upvote.', 'vote' => $existingVote], 200);
             }
-            
+
             return response()->json(['message' => 'You have already voted up for this petition.'], 400);
         }
-  
+
         $vote = Vote::create([
             'user_id' => $user->id,
             'petition_id' => $petitionId,
-            'vote_type' => 'upvote', 
+            'vote_type' => 'upvote',
         ]);
-    
+
+        $petition = Petition::find($petitionId);
+        $petition->increment('upvotes');
+        $this->triggerCriteriaCheck($petition);
+
         return response()->json($vote, 201);
     }
-    
 
     public function downvote(Request $request): JsonResponse
     {
         $request->validate([
-            'petitionId' => 'required|integer|exists:petitions,id', 
+            'petitionId' => 'required|integer|exists:petitions,id',
         ]);
-    
+
         $user = Auth::user();
         $petitionId = $request->input('petitionId');
-    
+
         $existingVote = Vote::where('user_id', $user->id)
             ->where('petition_id', $petitionId)
             ->first();
-    
+
         if ($existingVote) {
             if ($existingVote->vote_type === 'upvote') {
-                // Update the existing vote to a downvote
+                // Update the existing vote from upvote to downvote
                 $existingVote->update(['vote_type' => 'downvote']);
+
+                // Increment downvote and decrement upvote on petition
+                $petition = Petition::find($petitionId);
+                $petition->increment('downvotes');
+                $petition->decrement('upvotes');
+
                 return response()->json(['message' => 'Your vote has been updated to downvote.', 'vote' => $existingVote], 200);
             }
-    
+
             return response()->json(['message' => 'You have already voted down for this petition.'], 400);
         }
-    
-        // Create a new vote as a downvote
+
         $vote = Vote::create([
             'user_id' => $user->id,
             'petition_id' => $petitionId,
-            'vote_type' => 'downvote', // Assuming 'downvote' is a valid value in the vote_type column
+            'vote_type' => 'downvote',
         ]);
-    
-        return response()->json($vote, 201); // 201 Created
+
+        $petition = Petition::find($petitionId);
+        $petition->increment('downvotes');
+        $this->triggerCriteriaCheck($petition);
+
+        return response()->json($vote, 201);
     }
-    
-    // Display a listing of the votes.
+
+    public function triggerCriteriaCheck($petition): JsonResponse
+    {
+        if (in_array($petition->status, ['Open for consideration', 'Invalidated'])) {
+            return response()->json([
+                'message' => 'This petition has already been finalized and cannot be changed.',
+                'status' => $petition->status
+            ]);
+        }
+
+        $difference = $petition->upvotes - $petition->downvotes;
+
+        if ($difference > 5) {
+
+            $petition->update(['status' => 'Open for consideration']);
+            PetitionInstituteController::createPetitionInstitutePivotTables($petition->id);
+
+            return response()->json([
+                'message' => 'The difference between upvotes and downvotes is larger than 5. Petition status updated to "open for consideration".',
+                'status' => $petition->status
+            ]);
+        }
+
+        $petition->update(['status' => 'Invalidated']);
+
+        return response()->json([
+            'message' => 'The difference between upvotes and downvotes is 5 or less. Petition status updated to "Invalidated".',
+            'difference' => $difference,
+            'status' => $petition->status
+        ]);
+    }
+
+
     public function index(): JsonResponse
     {
         $votes = Vote::all();

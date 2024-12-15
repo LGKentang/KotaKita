@@ -2,6 +2,7 @@
 use App\Http\Controllers\BudgetAllocationController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PetitionController;
+use App\Http\Controllers\PetitionInstituteController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\UpdateController;
 use App\Http\Controllers\UserController;
@@ -21,12 +22,10 @@ Route::get('/users', function () {
     return User::all();
 });
 
-// Auth routes
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::get('/institutes/projects', [InstituteController::class, 'getInstituteProjects']);
 
-// Public GET routes for API Resources
 Route::get('/institutes', [InstituteController::class, 'index']);
 Route::get('/institutes/{institute}', [InstituteController::class, 'show']);
 
@@ -36,9 +35,11 @@ Route::get('/petitions/{petition}', [PetitionController::class, 'show']);
 Route::get('/projects', [ProjectController::class, 'index']);
 Route::get('/projects/{project}', [ProjectController::class, 'show']);
 
-// Protect routes requiring authentication
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/getUserPetitions', [PetitionController::class, 'getUserPetitions']);
+    Route::post('/setPetitionStatus',[PetitionController::class, 'setPetitionStatus']);
+
+    Route::post('/setOfferStatus',[PetitionInstituteController::class, 'updateStatus']);
 
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/upvote', [VoteController::class, 'upvote']);
@@ -47,7 +48,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/updateProfile', [UserController::class, 'updateProfile']);
     Route::post('/updateInstitute', [InstituteController::class, 'updateInstitute']);
     
-    // Remaining protected API resource routes
     Route::apiResource('institutes', InstituteController::class)->except(['index', 'show']);
     Route::apiResource('petitions', PetitionController::class)->except(['index', 'show']);
     Route::apiResource('projects', ProjectController::class)->except(['index', 'show']);
