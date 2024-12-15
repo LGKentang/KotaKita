@@ -35,6 +35,8 @@ Route::get('/petitions/{petition}', [PetitionController::class, 'show']);
 Route::get('/projects', [ProjectController::class, 'index']);
 Route::get('/projects/{project}', [ProjectController::class, 'show']);
 
+Route::get('/getComments',[CommentController::class,'getComment']);
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/getUserPetitions', [PetitionController::class, 'getUserPetitions']);
     Route::post('/setPetitionStatus',[PetitionController::class, 'setPetitionStatus']);

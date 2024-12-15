@@ -9,6 +9,38 @@ use Illuminate\Http\JsonResponse;
 
 class CommentController extends Controller
 {
+    public function getComment(Request $request)
+    {
+        $projectId = $request->query('project_id');
+        $petitionId = $request->query('petition_id');
+        
+        $query = Comment::query();
+    
+        if ($projectId) {
+            $query->where(function($q) use ($projectId) {
+                $q->where('project_id', $projectId)
+                  ->orWhereNull('project_id');
+            });
+        } elseif ($petitionId) {
+            $query->where(function($q) use ($petitionId) {
+                $q->where('petition_id', $petitionId)
+                  ->orWhereNull('petition_id');
+            });
+        } else {
+            return response()->json(['message' => 'No project_id or petition_id provided'], 400);
+        }
+
+        $comments = $query->get();
+    
+        if ($comments->isEmpty()) {
+            return response()->json(['message' => 'No comments found for the given parameters'], 404);
+        }
+    
+        return response()->json($comments);
+    }
+    
+    
+
     public function comment(Request $request): JsonResponse
     {
         $request->validate([
