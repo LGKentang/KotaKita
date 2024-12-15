@@ -48,4 +48,8 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    protected function petitions(){
+        return $this->hasMany(Petition::class);
+    }
 }

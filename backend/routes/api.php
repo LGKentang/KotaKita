@@ -21,13 +21,25 @@ Route::get('/users', function () {
     return User::all();
 });
 
-
+// Auth routes
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::get('/institutes/projects', [InstituteController::class, 'getInstituteProjects']);
 
+// Public GET routes for API Resources
+Route::get('/institutes', [InstituteController::class, 'index']);
+Route::get('/institutes/{institute}', [InstituteController::class, 'show']);
+
+Route::get('/petitions', [PetitionController::class, 'index']);
+Route::get('/petitions/{petition}', [PetitionController::class, 'show']);
+
+Route::get('/projects', [ProjectController::class, 'index']);
+Route::get('/projects/{project}', [ProjectController::class, 'show']);
+
+// Protect routes requiring authentication
 Route::middleware('auth:sanctum')->group(function () {
-    
+    Route::get('/getUserPetitions', [PetitionController::class, 'getUserPetitions']);
+
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/upvote', [VoteController::class, 'upvote']);
     Route::post('/downvote', [VoteController::class, 'downvote']);
@@ -35,9 +47,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/updateProfile', [UserController::class, 'updateProfile']);
     Route::post('/updateInstitute', [InstituteController::class, 'updateInstitute']);
     
-    Route::apiResource('institutes', InstituteController::class);
-    Route::apiResource('petitions', PetitionController::class);
-    Route::apiResource('projects', ProjectController::class);
+    // Remaining protected API resource routes
+    Route::apiResource('institutes', InstituteController::class)->except(['index', 'show']);
+    Route::apiResource('petitions', PetitionController::class)->except(['index', 'show']);
+    Route::apiResource('projects', ProjectController::class)->except(['index', 'show']);
     Route::apiResource('votes', VoteController::class);
     Route::apiResource('updates', UpdateController::class);
     Route::apiResource('comments', CommentController::class);
