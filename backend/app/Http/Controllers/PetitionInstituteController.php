@@ -11,6 +11,29 @@ use Illuminate\Http\Request;
 
 class PetitionInstituteController extends Controller
 {
+    public function getOffers(): JsonResponse
+    {
+        $user = Auth::user();
+    
+        if (!$user || $user->role != 'institute') {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorized: Only institutes can view offers.',
+            ], 403);
+        }
+    
+
+        $pendingPetitions = PetitionInstitute::where('status', 'Pending')
+        ->where('institute_id', $user->institute_id) 
+        ->get();
+        return response()->json([
+            'success' => true,
+            'data' => $pendingPetitions,
+        ], 200);
+    }
+    
+
+
     public static function createPetitionInstitutePivotTables($petitionId): JsonResponse
     {
         $petition = Petition::find($petitionId);
