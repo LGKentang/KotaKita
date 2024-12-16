@@ -4,9 +4,10 @@ import React from 'react';
 import { Button } from './Button';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useAppContext } from '@/app/context';
 
 const Navbar = () => {
-  const [isLogin, setIsLogin] = useState(false);
+  const { id, token } = useAppContext();
 
   return (
     <div className="sticky top-0 z-50 w-full bg-slate-900 shadow-md">
@@ -51,7 +52,7 @@ const Navbar = () => {
           </Link>
 
           {/* Log in Button */}
-          {!isLogin ? (
+          {!id ? (
             <Link href={{ pathname: '/login', query: { tab: 1 } }}>
               <Button className="rounded-md px-4 py-2 text-black shadow-md transition duration-200 ease-in-out hover:bg-blue-500 hover:shadow-lg">
                 Log in
@@ -64,11 +65,11 @@ const Navbar = () => {
               }}
             >
               <Image
-                src="/assets/profile-svgrepo-com"
-                width="40"
-                height="40"
+                src="/assets/missing_image.avif"
+                width="45"
+                height="45"
                 alt="profile pic"
-                className="rounded-full"
+                className="size-10 rounded-full"
               />
             </Link>
           )}

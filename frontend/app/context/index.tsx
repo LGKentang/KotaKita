@@ -1,3 +1,4 @@
+'use client';
 import React, {
   createContext,
   useContext,
@@ -9,8 +10,6 @@ import React, {
 type AuthContextType = {
   id: string | null;
   token: string | null;
-  setId: (id: string | null) => void;
-  setToken: (token: string | null) => void;
 };
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -27,7 +26,7 @@ export function Wrapper({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ id, token, setId, setToken }}>
+    <AuthContext.Provider value={{ id, token }}>
       {children}
     </AuthContext.Provider>
   );

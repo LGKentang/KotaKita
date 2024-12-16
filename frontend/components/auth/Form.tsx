@@ -1,5 +1,6 @@
 'use client';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/shared/Button';
 import { Input } from '@/components/shared/Input';
 import { FormEvent } from 'react';
@@ -12,11 +13,12 @@ type AuthFormProps = {
 };
 
 const AuthForm = ({ isLogin }: AuthFormProps) => {
+  const router = useRouter();
+
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     try {
       e.preventDefault();
       const formData = new FormData(e.target as any);
-
       if (isLogin) {
         const res = await login(
           formData.get('email') as string,
@@ -27,6 +29,7 @@ const AuthForm = ({ isLogin }: AuthFormProps) => {
           const { token } = res.data;
           localStorage.setItem('id', id);
           localStorage.setItem('token', token);
+          router.push('/home');
         } else {
           console.error(res.error);
         }
