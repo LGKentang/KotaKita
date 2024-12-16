@@ -16,7 +16,7 @@ class PetitionsTableSeeder extends Seeder
                 'title' => 'Petition for Climate Change Action', 
                 'description' => 'Support the movement to fight climate change.', 
                 'submissionDate' => Carbon::now(), 
-                'status' => 'active',
+                'status' => 'Open',
                 'upvotes' => 350,
                 'downvotes' => 50,
                 'thumbnail_url' => 'https://picsum.photos/200/300?random=1'
@@ -26,7 +26,7 @@ class PetitionsTableSeeder extends Seeder
                 'title' => 'Petition for Affordable Healthcare', 
                 'description' => 'Make healthcare affordable for everyone.', 
                 'submissionDate' => Carbon::now(), 
-                'status' => 'active',
+                'status' => 'Open',
                 'upvotes' => 500,
                 'downvotes' => 30,
                 'thumbnail_url' => 'https://picsum.photos/200/300?random=2'
@@ -36,7 +36,7 @@ class PetitionsTableSeeder extends Seeder
                 'title' => 'Petition for Free Education', 
                 'description' => 'Support free education for all students.', 
                 'submissionDate' => Carbon::now(), 
-                'status' => 'active',
+                'status' => 'Open',
                 'upvotes' => 1200,
                 'downvotes' => 200,
                 'thumbnail_url' => 'https://picsum.photos/200/300?random=3'
@@ -46,7 +46,7 @@ class PetitionsTableSeeder extends Seeder
                 'title' => 'Petition for Animal Rights', 
                 'description' => 'Fight for the rights of animals around the world.', 
                 'submissionDate' => Carbon::now(), 
-                'status' => 'active',
+                'status' => 'Open',
                 'upvotes' => 900,
                 'downvotes' => 60,
                 'thumbnail_url' => 'https://picsum.photos/200/300?random=4'
@@ -56,7 +56,7 @@ class PetitionsTableSeeder extends Seeder
                 'title' => 'Petition for Mental Health Awareness', 
                 'description' => 'Help raise awareness for mental health issues.', 
                 'submissionDate' => Carbon::now(), 
-                'status' => 'active',
+                'status' => 'Open',
                 'upvotes' => 450,
                 'downvotes' => 50,
                 'thumbnail_url' => 'https://picsum.photos/200/300?random=5'

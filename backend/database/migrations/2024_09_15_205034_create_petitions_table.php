@@ -15,6 +15,7 @@ class CreatePetitionsTable extends Migration
             $table->text('description');
             $table->date('submissionDate');
             $table->string('status');
+            $table->foreignId('institute_id')->nullable()->default(null)->constrained('institutes')->onDelete('cascade');
             $table->integer('upvotes')->default(0);
             $table->integer('downvotes')->default(0);
             $table->string('thumbnail_url');

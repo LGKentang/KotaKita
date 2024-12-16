@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Institute;
 use App\Models\Petition;
 use App\Services\FileService;
 use Auth;
@@ -13,7 +14,6 @@ class PetitionController extends Controller
 {
     public function getUserPetitions(Request $request)
     {
-        
         $user = Auth::user();
     
         if (!$user) {
@@ -24,21 +24,84 @@ class PetitionController extends Controller
         }
     
         $petitions = $user->petitions;
-
+    
+        foreach ($petitions as $petition) {
+            if ($petition->institute_id) {
+                $petition->institute_name = Institute::find($petition->institute_id)->name ?? 'Institute not found';
+            } else {
+                $petition->institute_name = null;
+            }
+        }
+    
         return response()->json([
             'petitions' => $petitions,
         ]);
     }
+    
 
-    // public function setPetition
+    public function setPetitionStatus(Request $request): JsonResponse
+    {
+        $request->validate([
+            'petition_id' => 'required|integer|exists:petitions,id',
+            'status' => 'required|string|in:open,closed,Open,Closed',
+        ]);
+    
+        $user = Auth::user();
+        
+        if (!$user) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorized user.',
+            ], 401);
+        }
+    
+        $petition = Petition::where('id', $request->petition_id)
+                            ->where('user_id', $user->id)
+                            ->first();
+    
+        if (!$petition) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Petition not found or does not belong to the user.',
+            ], 404);
+        }
+    
+        if ($petition->status === $request->status) {
+            return response()->json([
+                'success' => false,
+                'message' => "The petition status is already '{$request->status}'.",
+            ], 400); 
+        }
+    
+        // Update the status
+        $petition->status = $request->status;
+        $petition->save();
+    
+        return response()->json([
+            'success' => true,
+            'message' => 'Petition status updated successfully.',
+            'petition' => $petition,
+        ]);
+    }
+    
+    
     
 
     public function index(): JsonResponse
     {
         $petitions = Petition::all();
+    
+        foreach ($petitions as $petition) {
+            if ($petition->institute_id) {
+                $petition->institute_name = Institute::find($petition->institute_id)->name ?? 'Institute not found';
+            } else {
+                $petition->institute_name = null;
+            }
+        }
+    
         return response()->json($petitions);
     }
-
+    
     public function store(Request $request): JsonResponse
     {
         $request->validate([
