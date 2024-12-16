@@ -4,74 +4,10 @@ import Link from "next/link";
 import { FaThumbsUp, FaThumbsDown } from "react-icons/fa";
 import { MdFilterList } from "react-icons/md";
 import { GetAllPetitions } from "@/libs/actions/petitions.action";
+import { IPetition } from "@/libs/types/petition.type";
 
-// Define types for Petition data
-interface Petition {
-    id: number;
-    title: string;
-    description: string;
-    upvotes: number;
-    downvotes: number;
-    status: "Active" | "Pending Review" | "Closed";
-    submissionDate: string;
-    image: string;
-}
 
-// Sample data for ongoing petitions
-const ongoingPetitions = [
-    {
-        id: 1,
-        title: "Petition for Climate Change Action",
-        description: "Support the movement to fight climate change.",
-        upvotes: 350,
-        downvotes: 50,
-        status: "Active",
-        submissionDate: "2024-01-10",
-        image: "https://www.svgrepo.com/show/508699/landscape-placeholder.svg"
-    },
-    {
-        id: 2,
-        title: "Petition for Affordable Healthcare",
-        description: "Make healthcare affordable for everyone.",
-        upvotes: 500,
-        downvotes: 30,
-        status: "Pending Review",
-        submissionDate: "2024-02-15",
-        image: "https://www.svgrepo.com/show/508699/landscape-placeholder.svg"
-    },
-    {
-        id: 3,
-        title: "Petition for Free Education",
-        description: "Support free education for all students.",
-        upvotes: 1200,
-        downvotes: 200,
-        status: "Active",
-        submissionDate: "2024-03-20",
-        image: "https://www.svgrepo.com/show/508699/landscape-placeholder.svg"
-    },
-    {
-        id: 4,
-        title: "Petition for Animal Rights",
-        description: "Fight for the rights of animals around the world.",
-        upvotes: 900,
-        downvotes: 60,
-        status: "Closed",
-        submissionDate: "2023-12-05",
-        image: "https://www.svgrepo.com/show/508699/landscape-placeholder.svg"
-    },
-    {
-        id: 5,
-        title: "Petition for Mental Health Awareness",
-        description: "Help raise awareness for mental health issues.",
-        upvotes: 450,
-        downvotes: 50,
-        status: "Active",
-        submissionDate: "2024-04-01",
-        image: "https://www.svgrepo.com/show/508699/landscape-placeholder.svg"
-    },
-];
 
-// Function to calculate vote percentages
 const getVotePercentage = (upvotes: number, downvotes: number) => {
     const totalVotes = upvotes + downvotes;
     const upvotePercentage = (upvotes / totalVotes) * 100;
@@ -85,15 +21,15 @@ const Petition: React.FC = () => {
     const [showFilterOptions, setShowFilterOptions] = useState<boolean>(false);
     const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
     const [dateOrder, setDateOrder] = useState<"newest" | "oldest">("newest");
+    const [petitions,setPetitions] = useState<IPetition[]>([]);
 
     useEffect(() => {
         const fetchPetitions = async () => {
           try {
             const data = await GetAllPetitions();
             console.log(data);
-            // setPetitions(data); // Set the fetched petitions to state
+            setPetitions(data);
           } catch (err) {
-            // setError('Failed to fetch petitions');
             console.error(err);
           }
         };
@@ -101,7 +37,6 @@ const Petition: React.FC = () => {
         fetchPetitions();
       }, []); 
 
-    // Function to toggle status filters
     const toggleStatusFilter = (status: string) => {
         setSelectedStatuses((prevStatuses) =>
             prevStatuses.includes(status)
@@ -110,8 +45,7 @@ const Petition: React.FC = () => {
         );
     };
 
-    // Filtered and sorted petitions
-    const filteredPetitions = ongoingPetitions
+    const filteredPetitions = petitions
         .filter((petition) =>
             petition.title.toLowerCase().includes(searchQuery.toLowerCase())
         )
@@ -217,7 +151,7 @@ const Petition: React.FC = () => {
                         <Link key={petition.id} href={`/petitions/${petition.id}`}>
                             <div className="bg-white p-6 rounded-lg shadow-lg cursor-pointer hover:shadow-xl transition-shadow duration-300 flex flex-col h-full">
                                 <img
-                                    src={petition.image}
+                                    src={`${process.env.NEXT_PUBLIC_BACKEND_URI_IMAGE}${petition.thumbnail_url}`}
                                     alt={petition.title}
                                     className="w-full h-48 object-cover rounded-lg mb-4"
                                 />

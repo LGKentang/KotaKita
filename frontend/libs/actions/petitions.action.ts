@@ -37,7 +37,7 @@ export async function GetPetition(id: number) {
 
 export async function AddPetition(formData: FormData, token: string | null) {
   try {
-    const res = await fetch(process.env.BACKEND_URL + '/petitions', {
+    const res = await fetch(process.env.BACKEND_URI + '/petitions', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`,

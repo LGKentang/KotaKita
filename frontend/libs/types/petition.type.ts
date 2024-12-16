@@ -1,4 +1,4 @@
-export interface Petition {
+export interface IPetition {
     id: number;
     user_id: number;
     title: string;
