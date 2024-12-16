@@ -5,9 +5,11 @@ import Image from 'next/image';
 import useEmblaCarousel from 'embla-carousel-react';
 import React, { useEffect, useCallback, useState } from 'react';
 import { Project } from '@/libs/types/project.type';
+import { IPetition } from '@/libs/types/petition.type';
+import parseImageUrl from '@/libs/utils/parse';
 
 type CarouselProps = {
-  post: (Post | Project)[];
+  post: (IPetition)[];
 };
 
 export const Carousel = ({ post }: CarouselProps) => {
@@ -59,8 +61,8 @@ export const Carousel = ({ post }: CarouselProps) => {
               <div className="relative h-80 w-80 shrink-0">
                 <Image
                   fill
-                  src={item.img}
-                  alt={item.slug}
+                  src={parseImageUrl(item.thumbnail_url)}
+                  alt={item.title}
                   className="object-cover"
                 />
               </div>
@@ -72,7 +74,7 @@ export const Carousel = ({ post }: CarouselProps) => {
                     {item.title}
                   </h1>
                   <p className="text-base leading-relaxed text-gray-600">
-                    {item.desc}
+                    {item.description}
                   </p>
                 </div>
                 <div className="flex flex-col">
@@ -84,7 +86,7 @@ export const Carousel = ({ post }: CarouselProps) => {
                       alt="peoples"
                     />
                     <p className="text-lg font-semibold">
-                      {item.upvotes.length}
+                      {0}
                     </p>
                     <span className="font-medium text-gray-700">Pendukung</span>
                   </div>
@@ -110,8 +112,8 @@ export const Carousel = ({ post }: CarouselProps) => {
               <div className="relative size-20">
                 <Image
                   fill
-                  src={item.img}
-                  alt={`Thumbnail for ${item.slug}`}
+                  src={parseImageUrl(item.thumbnail_url)}
+                  alt={`Thumbnail for ${item.title}`}
                   className="object-cover"
                 />
               </div>

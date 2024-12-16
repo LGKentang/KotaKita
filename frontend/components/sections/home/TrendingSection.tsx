@@ -4,9 +4,10 @@ import { Button } from '@/components/shared/Button';
 import { Carousel } from '@/components/shared/Carousel';
 import type { Post } from '@/libs/types/post.type';
 import type { Project } from '@/libs/types/project.type';
+import { IPetition } from '@/libs/types/petition.type';
 
 export interface TrendingSectionProps {
-  items: Project[] | Post[];
+  items: IPetition[];
   trending: Trending;
 }
 

@@ -5,6 +5,8 @@ const nextConfig = {
       { protocol: 'https', hostname: 'img.freepik.com' },
       { protocol: 'https', hostname: 'images.pexels.com' },
       { protocol: 'https', hostname: 'via.placeholder.com' },
+      { protocol: 'https', hostname: 'picsum.photos' },
+      { protocol: 'http', hostname: '127.0.0.1' },
     ],
   },
   redirects: () => {
