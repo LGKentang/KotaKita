@@ -1,5 +1,8 @@
 'use server';
 
+import api from "@/config/api";
+import { PetitionForm } from "../types/petition.type";
+
 export async function GetAllPetitions() {
   try {
     const res = await fetch(process.env.BACKEND_URI + '/petitions');
@@ -20,29 +23,36 @@ export async function GetPetition(id: number) {
     if (!res.ok) {
       throw new Error(`Error status code ${res.status}`);
     }
+
+
     const data = await res.json();
-    return data;
+
+    return data; 
   } catch (err) {
-    console.log(err);
+    console.error('Error fetching petition:', err);
     throw err;
   }
 }
 
-export async function AddPetition(petitionsData: Object) {
+
+export async function AddPetition(formData: FormData, token: string | null) {
   try {
     const res = await fetch(process.env.BACKEND_URL + '/petitions', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
       },
-      body: JSON.stringify(petitionsData),
+      body: formData,
     });
+
     if (!res.ok) {
       throw new Error(`Error status code ${res.status}`);
     }
+
     const data = await res.json();
     return data;
   } catch (error) {
     throw error;
   }
 }
+

@@ -12,6 +12,7 @@ export default async function api<T>(
       ...init,
     });
 
+
     const data = await res.json();
     if (!res.ok) {
       // Log error for debugging

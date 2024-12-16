@@ -1,8 +1,9 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { FaThumbsUp, FaThumbsDown } from "react-icons/fa";
 import { MdFilterList } from "react-icons/md";
+import { GetAllPetitions } from "@/libs/actions/petitions.action";
 
 // Define types for Petition data
 interface Petition {
@@ -84,6 +85,21 @@ const Petition: React.FC = () => {
     const [showFilterOptions, setShowFilterOptions] = useState<boolean>(false);
     const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
     const [dateOrder, setDateOrder] = useState<"newest" | "oldest">("newest");
+
+    useEffect(() => {
+        const fetchPetitions = async () => {
+          try {
+            const data = await GetAllPetitions();
+            console.log(data);
+            // setPetitions(data); // Set the fetched petitions to state
+          } catch (err) {
+            // setError('Failed to fetch petitions');
+            console.error(err);
+          }
+        };
+    
+        fetchPetitions();
+      }, []); 
 
     // Function to toggle status filters
     const toggleStatusFilter = (status: string) => {
