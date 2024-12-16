@@ -10,4 +10,15 @@ class Vote extends Model
     use HasFactory;
 
     protected $fillable = ['user_id', 'petition_id', 'vote_type'];
+
+    public function petition()
+    {
+        return $this->belongsTo(Petition::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 }

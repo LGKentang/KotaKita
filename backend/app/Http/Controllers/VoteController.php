@@ -10,6 +10,8 @@ use Illuminate\Http\JsonResponse;
 
 class VoteController extends Controller
 {
+    
+
     public function upvote(Request $request): JsonResponse
     {
         $request->validate([

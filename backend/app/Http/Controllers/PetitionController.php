@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Institute;
 use App\Models\Petition;
+use App\Models\Vote;
 use App\Services\FileService;
 use Auth;
 use Illuminate\Http\Request;
@@ -37,6 +38,39 @@ class PetitionController extends Controller
             'petitions' => $petitions,
         ]);
     }
+  
+    public function getUserPetitionsWithVote(Request $request)
+    {
+        $user = Auth::user();
+    
+        if (!$user) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorized user.',
+            ], 401);
+        }
+    
+        $votes = Vote::where('user_id', $user->id)->get();
+        
+        $result = [];
+    
+        foreach ($votes as $vote) {
+            $petition = Petition::find($vote->petition_id);
+    
+            if ($petition) {
+                $result[] = [
+                    'petition_id' => $petition->id,
+                    'vote_type' => $vote->vote_type, 
+                ];
+            }
+        }
+    
+        return response()->json([
+            'votes' => $result, 
+        ]);
+    }
+    
+    
     
 
     public function setPetitionStatus(Request $request): JsonResponse

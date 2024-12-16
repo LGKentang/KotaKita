@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Models\Petition;
+use App\Models\Project;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
@@ -14,30 +16,38 @@ class CommentController extends Controller
         $projectId = $request->query('project_id');
         $petitionId = $request->query('petition_id');
         
-        $query = Comment::query();
-    
-        if ($projectId) {
-            $query->where(function($q) use ($projectId) {
-                $q->where('project_id', $projectId)
-                  ->orWhereNull('project_id');
-            });
-        } elseif ($petitionId) {
-            $query->where(function($q) use ($petitionId) {
-                $q->where('petition_id', $petitionId)
-                  ->orWhereNull('petition_id');
-            });
+        if ($projectId != "null") {
+            $project = Project::find($projectId);
+            if (!$project) {
+                return response()->json(['error' => 'Project not found'], 404);
+            }
+            $comments = $project->comments;
+        } elseif ($petitionId != "null") {
+            $petition = Petition::find($petitionId);
+            if (!$petition) {
+                return response()->json(['error' => 'Petition not found'], 404);  // Corrected error message here
+            }
+            $comments = $petition->comments;
         } else {
-            return response()->json(['message' => 'No project_id or petition_id provided'], 400);
+            return response()->json(['error' => 'No project or petition ID provided'], 400);
         }
-
-        $comments = $query->get();
-    
-        if ($comments->isEmpty()) {
-            return response()->json(['message' => 'No comments found for the given parameters'], 404);
-        }
-    
-        return response()->json($comments);
+        
+        // Format the comments to include username and profile picture URL
+        $formattedComments = $comments->map(function ($comment) {
+            return [
+                'id' => $comment->id,
+                'message' => $comment->message,
+                'created_at' => $comment->created_at,
+                'name' => $comment->user->name, // Assuming 'name' is the column in 'users' table
+                'profile_picture_url' => $comment->user->profile_picture_url // Assuming 'profile_picture_url' is the column in 'users' table
+            ];
+        });
+        
+        return response()->json($formattedComments);
     }
+    
+    
+    
     
     
 

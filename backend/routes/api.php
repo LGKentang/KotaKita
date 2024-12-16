@@ -44,6 +44,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/getOffer',[PetitionInstituteController::class, 'getOffers']);
     Route::post('/setOfferStatus',[PetitionInstituteController::class, 'updateStatus']);
 
+    Route::get('/getUserPetitionsWithVote',[PetitionController::class,'getUserPetitionsWithVote']);
+
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/upvote', [VoteController::class, 'upvote']);
     Route::post('/downvote', [VoteController::class, 'downvote']);

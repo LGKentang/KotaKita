@@ -16,7 +16,14 @@ class Petition extends Model
         return $this->hasMany(Comment::class);
     }
 
-    protected function petitions(){
+    protected function petitions()
+    {
         return $this->belongsTo(User::class);
     }
+
+    public function votes()
+    {
+        return $this->hasMany(Vote::class);
+    }
+
 }
