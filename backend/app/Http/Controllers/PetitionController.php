@@ -11,28 +11,7 @@ use Illuminate\Support\Str;
 
 class PetitionController extends Controller
 {
-    public function getUserPetitions(Request $request)
-    {
-        
-        $user = Auth::user();
     
-        if (!$user) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorized user.',
-            ], 401);
-        }
-    
-        $petitions = $user->petitions;
-
-        return response()->json([
-            'petitions' => $petitions,
-        ]);
-    }
-
-    // public function setPetition
-    
-
     public function index(): JsonResponse
     {
         $petitions = Petition::all();
