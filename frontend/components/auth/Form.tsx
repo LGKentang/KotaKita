@@ -18,11 +18,18 @@ const AuthForm = ({ isLogin }: AuthFormProps) => {
       const formData = new FormData(e.target as any);
 
       if (isLogin) {
-        const data = await login(
+        const res = await login(
           formData.get('email') as string,
           formData.get('password') as string,
         );
-        localStorage.setItem('token', data.token);
+        if (res.data) {
+          const { id } = res.data.user;
+          const { token } = res.data;
+          localStorage.setItem('id', id);
+          localStorage.setItem('token', token);
+        } else {
+          console.error(res.error);
+        }
       }
     } catch (error) {
       console.log(error);

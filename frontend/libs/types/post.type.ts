@@ -7,7 +7,8 @@ export interface Post {
   userId: number;
   img: string;
   desc: string;
-  status: 'Active' | 'Pending Review' | 'Closed';
+  status: string;
+  instituteId?: number;
   submissionDate: string;
   user?: User;
   upvotes: number[];

@@ -4,17 +4,9 @@ import React from 'react';
 import { Button } from './Button';
 import Image from 'next/image';
 import Link from 'next/link';
-import { UserProfile } from '@/libs/types/user.type';
 
 const Navbar = () => {
-  const [isLogin, setIsLogin] = useState(true);
-
-  const profile: UserProfile = {
-    id: 1,
-    profilePic: 'https://via.placeholder.com/150', // Example placeholder image
-    fullName: 'Alice Johnson',
-    userId: 101,
-  };
+  const [isLogin, setIsLogin] = useState(false);
 
   return (
     <div className="sticky top-0 z-50 w-full bg-slate-900 shadow-md">
@@ -69,15 +61,10 @@ const Navbar = () => {
             <Link
               href={{
                 pathname: '/profilepage',
-                query: { user: encodeURIComponent(JSON.stringify(profile)) },
               }}
             >
               <Image
-                src={
-                  !profile.profilePic
-                    ? '/assets/profile-svgrepo-com'
-                    : profile.profilePic
-                }
+                src="/assets/profile-svgrepo-com"
                 width="40"
                 height="40"
                 alt="profile pic"
