@@ -3,8 +3,8 @@ export interface User {
   email: string;
   name: string;
   instituteId?: number;
-  dob?: Date;
-  phoneNumber?: string;
+  date_of_birth?: Date;
+  phone_number?: string;
   profile_picture_url?: string;
   role?: string;
 }

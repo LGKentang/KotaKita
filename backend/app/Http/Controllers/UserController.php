@@ -32,11 +32,11 @@ class UserController extends Controller
         if ($request->hasFile('profile_picture')) {
             $file = $request->file('profile_picture');
             $filename = Str::uuid() . '.' . $file->getClientOriginalExtension();
-            $filePath = $file->storeAs('profile_pictures', $filename, 'public');
+            $filePath = $file->storeAs('thumbnails', $filename, 'public');
             $profilePictureUrl = Storage::url($filePath);
 
             // Update profile picture URL
-            $user->profile_picture_url = $profilePictureUrl;
+            $user->profile_picture_url = $filePath;
         }
 
         // Update other fields

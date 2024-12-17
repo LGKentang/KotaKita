@@ -73,3 +73,24 @@ export async function GetPetitionsByUser(token: string) {
     throw err;
   }
 }
+
+export async function UpdatePetitionStatus(
+  petitionId: string,
+  status: string,
+  token: string
+) {
+  const response = await fetch(process.env.BACKEND_URI + `/setPetitionStatus`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ petition_id : petitionId, status : status }),
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to update petition status');
+  }
+
+  return response.json();
+}

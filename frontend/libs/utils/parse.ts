@@ -1,7 +1,7 @@
 export default function parseImageUrl(imageUrl: string): string {
   try {
     if (!imageUrl) {
-      throw new Error('imageUrl is not defined');
+      return '/default-avatar.png';
     }
     if (imageUrl.startsWith('http') || imageUrl.startsWith('https')) {
       return imageUrl;

@@ -3,6 +3,7 @@ import { Button } from './Button';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useAppContext } from '@/app/context';
+import parseImageUrl from '@/libs/utils/parse';
 
 export default function Navbar() {
   const { user } = useAppContext();
@@ -75,12 +76,13 @@ export default function Navbar() {
           ) : (
             <Link href="/profilepage">
               <Image
-                src={user.profile_picture_url || '/assets/missing_image.avif'}
+                src={user.profile_picture_url ? parseImageUrl(user.profile_picture_url) : '/assets/missing_image.avif'}
                 width={45}
                 height={45}
                 alt="profile pic"
                 className="size-10 rounded-full"
               />
+
             </Link>
           )}
         </div>
