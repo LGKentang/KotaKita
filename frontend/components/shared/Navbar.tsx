@@ -59,7 +59,7 @@ export default function Navbar() {
           ) : (
             <Link href="/profilepage">
               <Image
-                src={user.profilePic || '/assets/missing_image.avif'}
+                src={user.profile_picture_url || '/assets/missing_image.avif'}
                 width={45}
                 height={45}
                 alt="profile pic"
