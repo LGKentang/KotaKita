@@ -5,13 +5,7 @@ import { AddProject } from '@/libs/actions/projects.action';
 
 export default function CreateProject() {
   const [loading, setLoading] = useState(false);
-  const [token, setToken] = useState<string | null>(null);
 
-  // Safely retrieve the token on the client side
-  useState(() => {
-    const storedToken = localStorage.getItem('token');
-    setToken(storedToken);
-  });
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -20,7 +14,6 @@ export default function CreateProject() {
     try {
       const formData = new FormData(e.target as HTMLFormElement);
 
-      // Extract and validate form fields
       const name = formData.get('name') as string;
       const startDate = formData.get('start') as string;
       const endDate = formData.get('end') as string;
@@ -41,26 +34,24 @@ export default function CreateProject() {
         return;
       }
 
-      // Prepare FormData for submission
       const projectData = new FormData();
       projectData.append('name', name);
-      projectData.append('startDate', startDate);
-      projectData.append('endDate', endDate);
+      projectData.append('start_date', startDate);
+      projectData.append('end_date', endDate);
       projectData.append('budget', budget);
-      projectData.append('desc', desc);
+      projectData.append('description', desc);
       projectData.append('thumbnail', thumbnailFile);
 
-      // Ensure token exists before making API call
+      const token = localStorage.getItem('token');
       if (!token) {
         alert('User is not authenticated!');
         setLoading(false);
         return;
       }
 
-      // Make API call
-      const res = await AddProject(projectData, token);
 
-      // Success handling
+      const res = await AddProject(projectData,token );
+
       alert('Project created successfully!');
       console.log('Response:', res);
     } catch (error) {

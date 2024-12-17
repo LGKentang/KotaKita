@@ -6,13 +6,17 @@ export async function AddProject(formData: FormData, token: string) {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
+        Accept:  'application/json'
       },
       body: formData,
     });
 
     if (!res.ok) {
-      throw new Error(`Error: ${res.statusText}`);
+      const errorResponse = await res.text();
+      console.error("Server Error:", errorResponse); 
+      throw new Error(`Error: ${res.status} - ${res.statusText}`);
     }
+
 
     const data = await res.json();
     console.log(data);
