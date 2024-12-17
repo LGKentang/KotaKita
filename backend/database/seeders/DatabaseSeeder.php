@@ -39,7 +39,9 @@ class DatabaseSeeder extends Seeder
             'name' => 'admin',
             'email' => 'admin@example.com',
             'phone_number' => "0000000000",
-            'role' => 'admin'
+            'role' => 'admin',
+            'profile_picture_url' => "https://banner2.cleanpng.com/20180425/euw/kisspng-magna-carta-holy-grail-libra-love-student-scorpio-5ae1327bf138f2.8866027715247079639881.jpg"
+
         ]);
 
         User::factory()->create([
@@ -47,7 +49,8 @@ class DatabaseSeeder extends Seeder
             'email' => 'ycab@gmail.com',
             'phone_number' => "0000000000",
             'institute_id' => 1,
-            'role' => 'institute'
+            'role' => 'institute',
+            'profile_picture_url' => "https://banner2.cleanpng.com/20180425/euw/kisspng-magna-carta-holy-grail-libra-love-student-scorpio-5ae1327bf138f2.8866027715247079639881.jpg"
         ]);
 
         $this->call([

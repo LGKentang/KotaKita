@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { Button } from '@/components/shared/Button';
 import { Input } from '@/components/shared/Input';
 import { FormEvent } from 'react';
-import { login } from '@/libs/actions/auth.action';
+import { login, register } from '@/libs/actions/auth.action';  // import register
 import { useAppContext } from '@/app/context';
 
 const LOGO_SIZE = 240 as const;
@@ -22,9 +22,27 @@ const AuthForm = ({ isLogin }: AuthFormProps) => {
       e.preventDefault();
       const formData = new FormData(e.target as any);
       if (isLogin) {
+        // Handle Login
         const res = await login(
           formData.get('email') as string,
+          formData.get('password') as string
+        );
+        if (res.data) {
+          const { token, user } = res.data;
+          localStorage.setItem('token', token);
+          setUser(user);
+          router.push('/home');
+        } else {
+          console.error(res.error);
+        }
+      } else {
+        // Handle Register
+        const res = await register(
+          formData.get('name') as string,
+          formData.get('email') as string,
           formData.get('password') as string,
+          formData.get('password_confirmation') as string,
+          formData.get('phone_number') as string
         );
         if (res.data) {
           const { token, user } = res.data;
@@ -67,22 +85,39 @@ const AuthForm = ({ isLogin }: AuthFormProps) => {
             </label>
             <Input name="email" id="email" type="text" />
           </div>
+
           <div className="flex flex-col">
             <label htmlFor="password" className="mb-1">
               Password
             </label>
             <Input name="password" id="password" type="password" />
           </div>
-          {!isLogin ? (
-            <div className="animation-pulse flex flex-col transition-all duration-200">
-              <label htmlFor="username" className="mb-1">
-                Username
-              </label>
-              <Input id="username" type="text" />
-            </div>
-          ) : (
-            ''
+
+          {!isLogin && (
+            <>
+
+              <div className="animation-pulse flex flex-col transition-all duration-200">
+                <label htmlFor="password_confirmation" className="mb-1">
+                  Confirm Password
+                </label>
+                <Input name="password_confirmation" id="password_confirmation" type="password" />
+              </div>
+              <div className="animation-pulse flex flex-col transition-all duration-200">
+                <label htmlFor="name" className="mb-1">
+                  Name
+                </label>
+                <Input name="name" id="name" type="text" />
+              </div>
+
+              <div className="animation-pulse flex flex-col transition-all duration-200">
+                <label htmlFor="phone_number" className="mb-1">
+                  Phone Number
+                </label>
+                <Input name="phone_number" id="phone_number" type="text" />
+              </div>
+            </>
           )}
+
           <Button
             type="submit"
             className="mt-4 border-2 border-black shadow-md hover:border-white hover:shadow-md"

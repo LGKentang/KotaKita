@@ -62,10 +62,17 @@ export const Carousel = ({ post }: CarouselProps) => {
 
               {/* Text Container */}
               <div className="flex flex-col justify-between space-y-6 w-full">
+              {/* // Inside the Carousel component */}
+
                 <div className="space-y-4">
                   <h1 className="text-3xl font-bold leading-snug">{item.title}</h1>
-                  <p className="text-lg leading-relaxed text-gray-600">{item.description}</p>
+
+  
+                  <p className="text-lg leading-relaxed text-gray-600 overflow-hidden line-clamp-6">
+                    {item.description}
+                  </p>
                 </div>
+
 
                 {/* Petition Link and Votes */}
                 <div className="flex items-center justify-between mt-4">
