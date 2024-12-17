@@ -1,37 +1,31 @@
-import { Institute } from '@/libs/types/institute.type';
 import { Post } from '@/libs/types/post.type';
 import { GetAllPetitions } from '@/libs/actions/petitions.action';
-import { Project } from '@/libs/types/project.type';
 import OfferList from '@/components/sections/dashboard/OfferList';
 import InstituteProjects from '@/components/sections/dashboard/InstituteProjects';
 import { Button } from '@/components/shared/Button';
 import Link from 'next/link';
-
-const mockInstitute: Institute = {
-  id: 1,
-  name: 'Global Education Initiative',
-  contact_number: '123-456-7890',
-  slogan: 'Empowering Future Leaders',
-  founded_on: '2000-05-15',
-  impact_description:
-    'The institute has been a leader in improving educational opportunities globally, with over 1 million students impacted.',
-  logo_url: '../assets/missing_image.avif',
-  thumbnail_url: 'https://example.com/images/thumbnail.png',
-};
+import { GetInstitute } from '@/libs/actions/institute.action';
+import { GetProjects } from '@/libs/actions/projects.action';
+import { Project } from '@/libs/types/project.type';
 
 export default async function InstituteDashboard({
   searchParams,
 }: {
-  searchParams: { modal?: string };
+  searchParams: { tab: string };
 }) {
-  const petitions = await GetAllPetitions();
-  const projects = await GetAllPetitions();
+  const tab = searchParams.tab || null;
 
-  // Filtered Projects and Petitions
-  const instituteProjects = projects.filter(
-    (project: Project) =>
-      project.instituteId === mockInstitute.id &&
-      project.status === 'Pending Review',
+  if (!tab) {
+    throw new Error('Institute ID is missing');
+  }
+  const instituteId = parseInt(tab);
+
+  const institute = await GetInstitute(instituteId);
+  const petitions = await GetAllPetitions();
+  const projects = await GetProjects();
+
+  const filteredProjects = projects.filter(
+    (project: Project) => project.instituteId == instituteId,
   );
 
   const offerList = petitions.filter(
@@ -43,27 +37,25 @@ export default async function InstituteDashboard({
       {/* Institute Profile */}
       <section className="mb-8 flex items-center gap-4 rounded-lg bg-white p-6 shadow-md">
         <img
-          src={mockInstitute.logo_url}
+          src={institute.logo}
           alt="Institute Logo"
           className="h-24 w-24 rounded-full object-cover"
         />
         <div>
-          <h1 className="text-2xl font-bold text-gray-800">
-            {mockInstitute.name}
-          </h1>
-          <p className="text-gray-600">{mockInstitute.slogan}</p>
+          <h1 className="text-2xl font-bold text-gray-800">{institute.name}</h1>
+          <p className="text-gray-600">{institute.slogan}</p>
           <p className="text-sm text-gray-500">
-            Founded on: {mockInstitute.founded_on}
+            Founded on: {institute.founded_on}
           </p>
           <p className="text-sm text-gray-500">
-            Contact: {mockInstitute.contact_number}
+            Contact: {institute.contact_number}
           </p>
         </div>
       </section>
       {/* Offer List */}
       <OfferList offerList={offerList} />
       {/* Pending Projects */}
-      <InstituteProjects instituteProjects={instituteProjects} />
+      <InstituteProjects instituteProjects={filteredProjects} />
 
       <div>
         <Link href="/dashboard/institute/createproject">

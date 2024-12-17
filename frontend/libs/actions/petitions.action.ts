@@ -1,7 +1,7 @@
 'use server';
 
-import api from "@/config/api";
-import { IPetition, PetitionForm } from "../types/petition.type";
+import api from '@/config/api';
+import { IPetition, PetitionForm } from '../types/petition.type';
 
 export async function GetAllPetitions() {
   try {
@@ -17,30 +17,28 @@ export async function GetAllPetitions() {
   }
 }
 
-export async function GetPetition(id: number) {
+export async function GetPetition(id: string) {
   try {
     const res = await fetch(process.env.BACKEND_URI + `/petitions/${id}`);
     if (!res.ok) {
       throw new Error(`Error status code ${res.status}`);
     }
 
-
     const data = await res.json();
 
-    return data; 
+    return data;
   } catch (err) {
     console.error('Error fetching petition:', err);
     throw err;
   }
 }
 
-
 export async function AddPetition(formData: FormData, token: string | null) {
   try {
     const res = await fetch(process.env.BACKEND_URI + '/petitions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
       body: formData,
     });
@@ -60,10 +58,10 @@ export async function GetPetitionsByUser(token: string) {
   try {
     const res = await fetch(process.env.BACKEND_URI + '/getUserPetitions', {
       headers: {
-        'Authorization': `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     });
-    
+
     if (!res.ok) {
       throw new Error(`Error status code ${res.status}`);
     }

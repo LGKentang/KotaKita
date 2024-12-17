@@ -28,6 +28,22 @@ export default function Navbar() {
             </span>
           </Link>
 
+          {/* dashboard */}
+          {user?.instituteId ? (
+            <Link
+              href={{
+                pathname: '/dashboard/institute',
+                query: { tab: user.instituteId },
+              }}
+            >
+              <span className="text-md cursor-pointer text-white transition duration-200 ease-in-out hover:text-blue-400">
+                Institutes
+              </span>
+            </Link>
+          ) : (
+            <></>
+          )}
+
           {/* Petitions Link */}
           <Link href="/petitions">
             <span className="text-md cursor-pointer text-white transition duration-200 ease-in-out hover:text-blue-400">
