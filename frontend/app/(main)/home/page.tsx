@@ -1,19 +1,20 @@
 'use client'
-import { Post } from '@/libs/types/post.type';
-import { User } from '@/libs/types/user.type';
+// import { Post } from '@/libs/types/post.type';
+// import { User } from '@/libs/types/user.type';
 import { Button } from '@/components/shared/Button';
 import Link from 'next/link';
-import { Project } from '@/libs/types/project.type';
+// import { Project } from '@/libs/types/project.type';
 import TrendingSection, {
   Trending,
 } from '@/components/sections/home/TrendingSection';
-import UserPortfolioSection from '@/components/sections/home/UserPortfolioSection';
+// import UserPortfolioSection from '@/components/sections/home/UserPortfolioSection';
 import { PageParams } from '@/libs/types/common.type';
 import { useEffect, useState } from 'react';
 import { GetAllPetitions } from '@/libs/actions/petitions.action';
+import { IPetition } from '@/libs/types/petition.type';
 
-const Home = ({ searchParams }: PageParams) => {
-  const [petitions, setPetitions] = useState<any[]>([]); // Adjust type based on the shape of data from your backend
+const Home = ({}: PageParams) => {
+  const [petitions, setPetitions] = useState<IPetition[]>([]); // Adjust type based on the shape of data from your backend
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [currentSlogan, setCurrentSlogan] = useState('');
