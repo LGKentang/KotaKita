@@ -27,9 +27,9 @@ export default function TrendingSection({
     <section className="py-8">
       <div className="relative mx-auto max-w-4xl">
         {/* Badge */}
-        <Badge className="absolute -left-2 -top-1 z-10 rounded bg-black px-3 py-1 text-sm text-white shadow-md">
+        {/* <Badge className="absolute -left-2 -top-1 z-10 rounded bg-black px-3 py-1 text-sm text-white shadow-md">
           Trending now
-        </Badge>
+        </Badge> */}
         {/* Carousel */}
         <Carousel post={items} />
       </div>
@@ -43,9 +43,9 @@ export default function TrendingSection({
           }}
           scroll={false}
         >
-          <Button className="border-2 border-black p-3 capitalize">
+          {/* <Button className="border-2 border-black p-3 capitalize">
             show {trending}
-          </Button>
+          </Button> */}
         </Link>
       </div>
     </section>

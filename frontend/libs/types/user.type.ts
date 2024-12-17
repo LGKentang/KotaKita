@@ -5,7 +5,7 @@ export interface User {
   instituteId?: number;
   dob?: Date;
   phoneNumber?: string;
-  profilePic?: string;
+  profile_picture_url?: string;
   role?: string;
 }
 

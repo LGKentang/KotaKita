@@ -1,15 +1,22 @@
 import ProfileSection from '@/components/sections/profile/ProfileSection';
 import ProfilePortofolioSection from '@/components/sections/profile/ProfilePortofolioSection';
+import UserPetitionSection from '@/components/sections/profile/UserPetitionSection';
 
 export default function ProfilePage() {
   return (
-    <main className="bg-slate-2 flex h-screen justify-center gap-5 bg-slate-200">
-      <div className="my-5 flex w-full justify-center">
-        <div className="flex w-[40%] justify-center gap-1 p-5 pb-3 pt-2">
-          <ProfileSection />
-        </div>
-        <div className="flex w-[40%] gap-1 bg-white p-5 pb-3 pt-2 shadow-lg">
-          <ProfilePortofolioSection />
+    <main className="bg-slate-200 flex flex-col min-h-screen justify-start gap-5 px-20">
+      <div className="my-5 flex w-full justify-center gap-5">
+        <ProfileSection />
+        <div
+          className="flex-1 overflow-y-auto max-h-[calc(100vh-200px)] "
+          style={{
+            scrollbarWidth: 'thin',  // Firefox scrollbar width
+            scrollbarColor: '#888 #f1f1f1',  // Firefox scrollbar color
+          }}
+        >
+          <div className="max-w-lg ">
+            <UserPetitionSection />
+          </div>
         </div>
       </div>
     </main>

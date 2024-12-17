@@ -7,6 +7,8 @@ const nextConfig = {
       { protocol: 'https', hostname: 'via.placeholder.com' },
       { protocol: 'https', hostname: 'picsum.photos' },
       { protocol: 'http', hostname: '127.0.0.1' },
+      { protocol: 'https', hostname: 'banner2.cleanpng.com' },
+
     ],
   },
   redirects: () => {

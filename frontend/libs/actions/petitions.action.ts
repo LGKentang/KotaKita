@@ -1,7 +1,7 @@
 'use server';
 
 import api from "@/config/api";
-import { PetitionForm } from "../types/petition.type";
+import { IPetition, PetitionForm } from "../types/petition.type";
 
 export async function GetAllPetitions() {
   try {
@@ -56,3 +56,22 @@ export async function AddPetition(formData: FormData, token: string | null) {
   }
 }
 
+export async function GetPetitionsByUser(token: string) {
+  try {
+    const res = await fetch(process.env.BACKEND_URI + '/getUserPetitions', {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+    
+    if (!res.ok) {
+      throw new Error(`Error status code ${res.status}`);
+    }
+
+    const data = await res.json();
+    return data.petitions as IPetition[];
+  } catch (err) {
+    console.error('Error fetching petitions for user:', err);
+    throw err;
+  }
+}

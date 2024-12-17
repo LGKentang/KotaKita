@@ -31,6 +31,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'test2@example.com',
             'phone_number' => "0000000000",
             'role' => 'user',
+
             'profile_picture_url' => "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJmEalYEgZpkDNhLZKB0jlj6UpIuow7_849g&s"
         ]);
 
