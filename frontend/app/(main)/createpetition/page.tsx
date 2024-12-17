@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { Switch, Transition } from '@headlessui/react';
 import { AddPetition } from '@/libs/actions/petitions.action';
 import { useRouter } from 'next/navigation';
-
+import { useAuthRedirect } from '@/libs/utils/auth';
 export default function CreatePetition() {
   const [formData, setFormData] = useState({
     title: '',
@@ -17,6 +17,7 @@ export default function CreatePetition() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [uploadSuccess, setUploadSuccess] = useState(false);
   const router = useRouter();
+  useAuthRedirect(router);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {

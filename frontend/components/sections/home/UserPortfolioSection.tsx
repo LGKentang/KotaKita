@@ -19,7 +19,7 @@ export default function UserPortfolioSection() {
   }
 
   useEffect(() => {
-    setContent(showPosts ? posts : projects);
+    setContent(posts);
     setCurrentPage(1);
   }, [showPosts]);
 
@@ -132,35 +132,35 @@ const posts: Post[] = [
   },
 ];
 
-const projects: Project[] = [
-  {
-    id: 1,
-    slug: 'ai-image-generator',
-    title: 'AI Image Generator',
-    img: 'https://img.freepik.com/free-photo/digital-art-concept-showing-abstract-ai-robot_188544-12345.jpg',
-    desc: 'A tool that generates stunning images using AI technology.',
-    status: 'Active',
-    submissionDate: '2023-11-30',
-    upvotes: [101, 102, 103],
-  },
-  {
-    id: 2,
-    slug: 'personal-budget-planner',
-    title: 'Personal Budget Planner',
-    img: 'https://img.freepik.com/free-photo/flat-lay-financial-concept-with-calculator_23-2148944456.jpg',
-    desc: 'An app to help you manage your personal finances effectively.',
-    status: 'Pending Review',
-    submissionDate: '2023-12-01',
-    upvotes: [103, 104],
-  },
-  {
-    id: 3,
-    slug: 'weather-forecast-app',
-    title: 'Weather Forecast App',
-    img: 'https://img.freepik.com/free-photo/digital-weather-forecast-interface-with-cloudy-background_188544-23123.jpg',
-    desc: 'Get accurate weather updates for your location instantly.',
-    status: 'Closed',
-    submissionDate: '2023-11-15',
-    upvotes: [101, 102, 103, 104],
-  },
-];
+// const projects: Project[] = [
+//   {
+//     id: 1,
+//     slug: 'ai-image-generator',
+//     title: 'AI Image Generator',
+//     img: 'https://img.freepik.com/free-photo/digital-art-concept-showing-abstract-ai-robot_188544-12345.jpg',
+//     desc: 'A tool that generates stunning images using AI technology.',
+//     status: 'Active',
+//     submissionDate: '2023-11-30',
+//     upvotes: [101, 102, 103],
+//   },
+//   {
+//     id: 2,
+//     slug: 'personal-budget-planner',
+//     title: 'Personal Budget Planner',
+//     img: 'https://img.freepik.com/free-photo/flat-lay-financial-concept-with-calculator_23-2148944456.jpg',
+//     desc: 'An app to help you manage your personal finances effectively.',
+//     status: 'Pending Review',
+//     submissionDate: '2023-12-01',
+//     upvotes: [103, 104],
+//   },
+//   {
+//     id: 3,
+//     slug: 'weather-forecast-app',
+//     title: 'Weather Forecast App',
+//     img: 'https://img.freepik.com/free-photo/digital-weather-forecast-interface-with-cloudy-background_188544-23123.jpg',
+//     desc: 'Get accurate weather updates for your location instantly.',
+//     status: 'Closed',
+//     submissionDate: '2023-11-15',
+//     upvotes: [101, 102, 103, 104],
+//   },
+// ];
