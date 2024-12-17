@@ -36,7 +36,7 @@ const Home = ({ searchParams }: PageParams) => {
     const fetchPetitions = async () => {
       try {
         setLoading(true);
-        const data = await GetAllPetitions(); 
+        const data = await GetAllPetitions();
         console.log(data)
         setPetitions(data);
         setLoading(false);
@@ -53,12 +53,12 @@ const Home = ({ searchParams }: PageParams) => {
   return (
     <main className="bg-white">
       <div className="flex w-full flex-col items-center justify-center bg-map bg-cover bg-center bg-no-repeat py-32 shadow-md">
-      <h1
-      className="relative animate-typing overflow-hidden whitespace-nowrap border-r-4 p-5 text-center text-4xl font-bold text-black"
-      style={{ fontSize: 40 }}
-    >
-      {currentSlogan}
-    </h1>
+        <h1
+          className="relative animate-typing overflow-hidden whitespace-nowrap border-r-4 p-5 text-center text-4xl font-bold text-black"
+          style={{ fontSize: 40 }}
+        >
+          {currentSlogan}
+        </h1>
         <Link href={'/createpetition'}>
           <Button className="mt-6 border-2 border-black text-lg">
             Create Petition

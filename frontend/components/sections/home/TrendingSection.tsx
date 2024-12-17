@@ -24,7 +24,7 @@ export default function TrendingSection({
     return trending === Trending.POSTS;
   }
   return (
-    <section className="py-8">
+    <section className="">
       <div className="relative mx-auto max-w-4xl">
         {/* Badge */}
         {/* <Badge className="absolute -left-2 -top-1 z-10 rounded bg-black px-3 py-1 text-sm text-white shadow-md">

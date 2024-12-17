@@ -1,4 +1,4 @@
-export default function parseImageUrl(imageUrl: string) {
+export default function parseImageUrl(imageUrl: string): string {
   try {
     if (!imageUrl) {
       throw new Error('imageUrl is not defined');
@@ -9,6 +9,7 @@ export default function parseImageUrl(imageUrl: string) {
       return `${process.env.NEXT_PUBLIC_BACKEND_URI_IMAGE}${imageUrl}`;
     }
   } catch (error) {
-    return error;
+    console.error(error); 
+    return '/default-avatar.png';
   }
 }

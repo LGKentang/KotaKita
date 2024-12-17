@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { GetInstitute } from '@/libs/actions/institute.action';
 import { GetProjects } from '@/libs/actions/projects.action';
 import { Project } from '@/libs/types/project.type';
+import parseImageUrl from '@/libs/utils/parse';
 
 export default async function InstituteDashboard({
   searchParams,
@@ -37,7 +38,7 @@ export default async function InstituteDashboard({
       {/* Institute Profile */}
       <section className="mb-8 flex items-center gap-4 rounded-lg bg-white p-6 shadow-md">
         <img
-          src={institute.logo}
+          src={parseImageUrl(institute.logo)}
           alt="Institute Logo"
           className="h-24 w-24 rounded-full object-cover"
         />

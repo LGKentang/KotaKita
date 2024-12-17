@@ -41,7 +41,7 @@ export const Carousel = ({ post }: CarouselProps) => {
   );
 
   return (
-    <div className="my-16">
+    <div className="mb-8">
       {/* Main Carousel */}
       <div className="embla shadow-xl" ref={mainEmblaRef}>
         <div className="embla__container">

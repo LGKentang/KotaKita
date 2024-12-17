@@ -7,15 +7,19 @@ import Modal from '@/components/shared/Modal';
 import { getUser } from '@/libs/actions/user.action';
 import parseImageUrl from '@/libs/utils/parse'; // Ensure this is working correctly
 import { User } from '@/libs/types/user.type';
+import { useRouter } from 'next/navigation'; // Import useRouter
+import { useAppContext } from '@/app/context';
 
 export default function ProfileSection() {
-  const [user, setUser] = useState<User | null>(null);
+  const {user, setUser} = useAppContext();
   const [isModalOpen, setModalOpen] = useState(false);
+  const router = useRouter(); // Initialize useRouter hook
 
   useEffect(() => {
     const fetchUserProfile = async () => {
-      const token = localStorage.getItem('token'); // Fixed comment syntax
+      const token = localStorage.getItem('token'); 
       if (!token) {
+        setUser(null); 
         console.error('No token found in localStorage');
         return;
       }
@@ -27,7 +31,7 @@ export default function ProfileSection() {
           throw new Error('Failed to fetch user profile');
         }
 
-        setUser(data); // Assuming the API response matches UserProfile structure
+        setUser(data); 
       } catch (error) {
         console.error(error);
       }
@@ -40,19 +44,25 @@ export default function ProfileSection() {
     setModalOpen((prev) => !prev);
   };
 
-  // Fallback image URL for missing or broken images
-  const fallbackImage = '/default-avatar.png'; // You can replace this with your own fallback URL
+  const fallbackImage = '/default-avatar.png'; 
 
-  // Helper function to parse or return a fallback URL if not valid
-  const getProfilePictureUrl = (url: string | undefined) => {
-    if (!url) {
-      return fallbackImage;
-    }
-    return parseImageUrl(url); // Ensure that `parseImageUrl` works correctly
+
+const getProfilePictureUrl = (url: string | undefined): string => {
+  if (!url) {
+    return fallbackImage;
+  }
+  return parseImageUrl(url); 
+};
+
+
+  const logout = () => {
+    setUser(null);
+    localStorage.removeItem('token');
+    router.push('/home'); 
   };
 
   if (!user) {
-    return <div>Loading...</div>; // Show loading state while user data is being fetched
+    return <div>Loading...</div>;
   }
 
   return (
@@ -76,6 +86,9 @@ export default function ProfileSection() {
         <p className="text-sm text-gray-500">{user.role}</p>
         <Button onClick={toggleModal} className="border-2 border-black mt-2">
           Change Profile
+        </Button>
+        <Button onClick={logout} className="border-2 border-black mt-2">
+          Logout
         </Button>
       </div>
       {isModalOpen && <Modal closeModal={() => setModalOpen(false)} />}
