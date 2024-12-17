@@ -5,6 +5,7 @@ import { Button } from '@/components/shared/Button';
 import { Input } from '@/components/shared/Input';
 import { FormEvent } from 'react';
 import { login } from '@/libs/actions/auth.action';
+import { useAppContext } from '@/app/context';
 
 const LOGO_SIZE = 240 as const;
 
@@ -14,6 +15,7 @@ type AuthFormProps = {
 
 const AuthForm = ({ isLogin }: AuthFormProps) => {
   const router = useRouter();
+  const { setUser } = useAppContext();
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     try {
@@ -25,10 +27,9 @@ const AuthForm = ({ isLogin }: AuthFormProps) => {
           formData.get('password') as string,
         );
         if (res.data) {
-          const { id } = res.data.user;
-          const { token } = res.data;
-          localStorage.setItem('id', id);
+          const { token, user } = res.data;
           localStorage.setItem('token', token);
+          setUser(user);
           router.push('/home');
         } else {
           console.error(res.error);

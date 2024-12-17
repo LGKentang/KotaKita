@@ -5,31 +5,45 @@ import React, {
   useState,
   useEffect,
   ReactNode,
+  Dispatch,
+  SetStateAction,
 } from 'react';
 
+import { User } from '@/libs/types/user.type';
+import { getUser } from '@/libs/actions/user.action';
+
 type AuthContextType = {
-  id: string | null;
-  token: string | null;
+  user: User | null;
+  setUser: Dispatch<SetStateAction<User | null>>;
 };
 
-const AuthContext = createContext<AuthContextType | null>(null);
+const AuthContext = createContext<AuthContextType>({
+  user: null,
+  setUser: () => {},
+});
 
 export function Wrapper({ children }: { children: ReactNode }) {
-  const [id, setId] = useState<string | null>(null);
-  const [token, setToken] = useState<string | null>(null);
+  const [user, setUser] = useState<User | null>(null);
+  const value = {
+    user,
+    setUser,
+  };
 
   useEffect(() => {
-    const storedId = localStorage.getItem('id');
-    const storedToken = localStorage.getItem('token');
-    if (storedId) setId(storedId);
-    if (storedToken) setToken(storedToken);
+    const token = localStorage.getItem('token');
+    if (!token) return;
+    getUser(token)
+      .then((data) => {
+        console.log(data);
+        setUser(data);
+      })
+      .catch((err) => {
+        console.error('Failed to fetch user:', err);
+        setUser(null);
+      });
   }, []);
 
-  return (
-    <AuthContext.Provider value={{ id, token }}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
 export function useAppContext() {

@@ -1,46 +1,24 @@
-import { Project } from '../types/project.type';
+'use server';
 
-export async function GetAllProjects() {
+export async function AddProject(formData: FormData, token: string) {
   try {
-    const res = await fetch(process.env.BACKEND_URI + '/projects');
-    if (!res.ok) {
-      throw new Error(`Error status code ${res.status}`);
-    }
-    const data = res.json();
-    return data;
-  } catch (err) {
-    throw err;
-  }
-}
-
-export async function GetProject(id: number) {
-  try {
-    const res = await fetch(process.env.BACKEND_URI + `/projects/${id}`);
-    if (!res.ok) {
-      throw new Error(`Error status code ${res.status}`);
-    }
-    const data = res.json();
-    return data;
-  } catch (err) {
-    throw err;
-  }
-}
-
-export async function AddProject(projectData: Project) {
-  try {
-    const res = await fetch(process.env.BACKEND_URI + `/projects`, {
+    const res = await fetch(process.env.BACKEND_URI + '/projects', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(projectData),
+      body: formData,
     });
+
     if (!res.ok) {
-      throw new Error(`Error status code ${res.status}`);
+      throw new Error(`Error: ${res.statusText}`);
     }
-    const data = res.json();
+
+    const data = await res.json();
+    console.log(data);
     return data;
   } catch (err) {
+    console.error('Error in AddProject:', err);
     throw err;
   }
 }

@@ -66,7 +66,7 @@ export default async function InstituteDashboard({
       <InstituteProjects instituteProjects={instituteProjects} />
 
       <div>
-        <Link href="/dashboard/institute/form">
+        <Link href="/dashboard/institute/createproject">
           <Button className="bg-green-500 text-white hover:border-0 hover:border-none hover:bg-green-300">
             Create a new project
           </Button>

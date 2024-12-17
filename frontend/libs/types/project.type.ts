@@ -4,7 +4,7 @@ export interface Project {
   id: number;
   slug: string;
   title: string;
-  instituteId?: number;
+  instituteId: number;
   img: string;
   submissionDate: string;
   status: 'Active' | 'Pending Review' | 'Closed';

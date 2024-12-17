@@ -1,13 +1,11 @@
 'use client';
-import { useState } from 'react';
-import React from 'react';
 import { Button } from './Button';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useAppContext } from '@/app/context';
 
-const Navbar = () => {
-  const { id, token } = useAppContext();
+export default function Navbar() {
+  const { user } = useAppContext();
 
   return (
     <div className="sticky top-0 z-50 w-full bg-slate-900 shadow-md">
@@ -51,23 +49,19 @@ const Navbar = () => {
             </span>
           </Link>
 
-          {/* Log in Button */}
-          {!id ? (
+          {/* Log in Button or Profile Picture */}
+          {!user ? (
             <Link href={{ pathname: '/login', query: { tab: 1 } }}>
               <Button className="rounded-md px-4 py-2 text-black shadow-md transition duration-200 ease-in-out hover:bg-blue-500 hover:shadow-lg">
                 Log in
               </Button>
             </Link>
           ) : (
-            <Link
-              href={{
-                pathname: '/profilepage',
-              }}
-            >
+            <Link href="/profilepage">
               <Image
-                src="/assets/missing_image.avif"
-                width="45"
-                height="45"
+                src={user.profilePic || '/assets/missing_image.avif'}
+                width={45}
+                height={45}
                 alt="profile pic"
                 className="size-10 rounded-full"
               />
@@ -77,6 +71,6 @@ const Navbar = () => {
       </nav>
     </div>
   );
-};
+}
 
 export { Navbar };

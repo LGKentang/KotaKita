@@ -27,7 +27,6 @@ export async function login(email: string, password: string) {
 
     return { data };
   } catch (error) {
-    // Log the error before returning it
     console.error('API Error:', error);
     return { error };
   }
