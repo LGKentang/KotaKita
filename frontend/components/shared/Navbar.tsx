@@ -30,11 +30,11 @@ export default function Navbar() {
           </Link>
 
           {/* dashboard */}
-          {user?.instituteId ? (
+          {user?.institute_id ? (
             <Link
               href={{
                 pathname: '/dashboard/institute',
-                query: { tab: user.instituteId },
+                query: { tab: user.institute_id },
               }}
             >
               <span className="text-md cursor-pointer text-white transition duration-200 ease-in-out hover:text-blue-400">
