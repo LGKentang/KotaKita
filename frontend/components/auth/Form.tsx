@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { Button } from '@/components/shared/Button';
 import { Input } from '@/components/shared/Input';
 import { FormEvent } from 'react';
-import { login, register } from '@/libs/actions/auth.action';  // import register
+import { login, register } from '@/libs/actions/auth.action'; // import register
 import { useAppContext } from '@/app/context';
 
 const LOGO_SIZE = 240 as const;
@@ -25,13 +25,19 @@ const AuthForm = ({ isLogin }: AuthFormProps) => {
         // Handle Login
         const res = await login(
           formData.get('email') as string,
-          formData.get('password') as string
+          formData.get('password') as string,
         );
         if (res.data) {
           const { token, user } = res.data;
           localStorage.setItem('token', token);
           setUser(user);
-          router.push('/home');
+          if (user.role == 'admin') {
+            router.push('/dashboard/admin');
+          } else if (user.role == 'institute') {
+            router.push('/dashboard/institute');
+          } else {
+            router.push('/home');
+          }
         } else {
           console.error(res.error);
         }
@@ -42,7 +48,7 @@ const AuthForm = ({ isLogin }: AuthFormProps) => {
           formData.get('email') as string,
           formData.get('password') as string,
           formData.get('password_confirmation') as string,
-          formData.get('phone_number') as string
+          formData.get('phone_number') as string,
         );
         if (res.data) {
           const { token, user } = res.data;
@@ -95,12 +101,15 @@ const AuthForm = ({ isLogin }: AuthFormProps) => {
 
           {!isLogin && (
             <>
-
               <div className="animation-pulse flex flex-col transition-all duration-200">
                 <label htmlFor="password_confirmation" className="mb-1">
                   Confirm Password
                 </label>
-                <Input name="password_confirmation" id="password_confirmation" type="password" />
+                <Input
+                  name="password_confirmation"
+                  id="password_confirmation"
+                  type="password"
+                />
               </div>
               <div className="animation-pulse flex flex-col transition-all duration-200">
                 <label htmlFor="name" className="mb-1">

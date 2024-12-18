@@ -1,7 +1,6 @@
 'use server';
 
-import api from '@/config/api';
-import { IPetition, PetitionForm } from '../types/petition.type';
+import { IPetition } from '../types/petition.type';
 
 export async function GetAllPetitions() {
   try {
