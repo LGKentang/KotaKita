@@ -28,7 +28,7 @@ const Petition: React.FC = () => {
             try {
                 // Fetch petitions once when the component mounts
                 const petitionsData = await GetAllPetitions();
-                setPetitions(petitionsData);
+                setPetitions(petitionsData );
             } catch (err) {
                 console.error(err);
             }
@@ -199,7 +199,7 @@ const Petition: React.FC = () => {
                         {/* Filter by Status */}
                         <div>
                             <p className="text-lg font-semibold mb-2">Filter by Status:</p>
-                            {["Active", "Pending Review", "Closed"].map((status) => (
+                            {["Open", "Open for Consideration", "Invalidated", "Accepted"].map((status) => (
                                 <label key={status} className="flex items-center space-x-2 mb-2">
                                     <input
                                         type="checkbox"

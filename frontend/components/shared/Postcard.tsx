@@ -1,5 +1,4 @@
 import { Post } from '@/libs/types/post.type';
-import { cn } from '@/libs/utils';
 import Image from 'next/image';
 import { Button } from './Button';
 

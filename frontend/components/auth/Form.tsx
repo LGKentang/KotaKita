@@ -42,7 +42,6 @@ const AuthForm = ({ isLogin }: AuthFormProps) => {
           console.error(res.error);
         }
       } else {
-        // Handle Register
         const res = await register(
           formData.get('name') as string,
           formData.get('email') as string,
@@ -51,10 +50,7 @@ const AuthForm = ({ isLogin }: AuthFormProps) => {
           formData.get('phone_number') as string,
         );
         if (res.data) {
-          const { token, user } = res.data;
-          localStorage.setItem('token', token);
-          setUser(user);
-          router.push('/home');
+          router.push('/login');
         } else {
           console.error(res.error);
         }

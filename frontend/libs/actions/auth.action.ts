@@ -25,6 +25,7 @@ export async function login(email: string, password: string) {
       };
     }
 
+
     return { data };
   } catch (error) {
     console.error('API Error:', error);
@@ -72,3 +73,34 @@ export async function register(
     return { error };
   }
 }
+
+export async function logout(token: string) {
+  try {
+    const res = await fetch(process.env.BACKEND_URI + `/logout`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      console.error(`Request failed: ${res.status}`, data);
+
+      throw {
+        message: 'Request failed',
+        status: res.status,
+        details: data,
+      };
+    }
+
+    return { data };
+  } catch (error) {
+    console.error('API Error:', error);
+    return { error };
+  }
+}
+

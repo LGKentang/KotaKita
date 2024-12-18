@@ -13,6 +13,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'kotakita-budsase2cdgzabct.eastasia-01.azurewebsites.net',
       },
+      {
+        protocol: 'https',
+        hostname: 'kotakita-v2-cwfthkfudedfbkhe.eastasia-01.azurewebsites.net',
+      },
     ],
   },
   redirects: () => {

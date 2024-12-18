@@ -7,9 +7,10 @@ import TrendingSection, {
 import { PageParams } from '@/libs/types/common.type';
 import { useEffect, useState } from 'react';
 import { GetAllPetitions } from '@/libs/actions/petitions.action';
+import { IPetition } from '@/libs/types/petition.type';
 
-const Home = ({ searchParams }: PageParams) => {
-  const [petitions, setPetitions] = useState<any[]>([]); // Adjust type based on the shape of data from your backend
+const Home = ({}: PageParams) => {
+  const [petitions, setPetitions] = useState<IPetition[]>([]); // Adjust type based on the shape of data from your backend
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [currentSlogan, setCurrentSlogan] = useState('');
@@ -49,6 +50,12 @@ const Home = ({ searchParams }: PageParams) => {
   return (
     <main className="bg-white">
       <div className="flex w-full flex-col items-center justify-center bg-map bg-cover bg-center bg-no-repeat py-32 shadow-md">
+        <h1
+          className="relative animate-typing overflow-hidden whitespace-nowrap border-r-4 p-5 text-center text-4xl font-bold text-black"
+          style={{ fontSize: 40 }}
+        >
+          {currentSlogan}
+        </h1>
         <h1
           className="relative animate-typing overflow-hidden whitespace-nowrap border-r-4 p-5 text-center text-4xl font-bold text-black"
           style={{ fontSize: 40 }}

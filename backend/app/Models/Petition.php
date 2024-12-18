@@ -11,6 +11,7 @@ class Petition extends Model
 
     protected $fillable = ['user_id', 'title', 'description', 'submissionDate', 'status', 'upvotes', 'downvotes', 'thumbnail_url'];
 
+
     public function comments()
     {
         return $this->hasMany(Comment::class);

@@ -5,16 +5,16 @@ import UserPetitionSection from '@/components/sections/profile/UserPetitionSecti
 export default function ProfilePage() {
   return (
     <main className="bg-slate-200 flex flex-col min-h-screen justify-start gap-5 px-20">
-      <div className="my-5 flex w-full justify-center gap-5">
+      <div className="my-10 flex w-full justify-center gap-5">
         <ProfileSection />
         <div
-          className="flex-1 overflow-y-auto max-h-[calc(100vh-200px)] "
+          className="flex-1 overflow-y-auto max-h-[500px] "
           style={{
-            scrollbarWidth: 'thin',  // Firefox scrollbar width
-            scrollbarColor: '#888 #f1f1f1',  // Firefox scrollbar color
+            scrollbarWidth: 'thin', 
+            scrollbarColor: '#888 #f1f1f1',  
           }}
         >
-          <div className="max-w-lg ">
+          <div className="items-start">
             <UserPetitionSection />
           </div>
         </div>

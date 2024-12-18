@@ -20,7 +20,7 @@ export default function TrendingSection({
     return trending === Trending.POSTS;
   }
   return (
-    <section className="py-8">
+    <section className="">
       <div className="relative mx-auto max-w-4xl">
         <Carousel post={items} />
       </div>

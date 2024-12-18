@@ -22,7 +22,7 @@ const PetitionDetail = () => {
       try {
         setLoading(true);
         setError(null);
-        const data = await GetPetition(Number(id));
+        const data = await GetPetition(id);
         setPetition(data);
       } catch (err) {
         console.error(err);

@@ -116,10 +116,20 @@ class VoteController extends Controller
             ]);
         }
 
-        $petition->update(['status' => 'Invalidated']);
+        else if ($difference < -5) {
+
+            $petition->update(['status' => 'Invalidated']);
+            PetitionInstituteController::createPetitionInstitutePivotTables($petition->id);
+
+            return response()->json([
+                'message' => 'The difference between upvotes and downvotes is less than -5. Petition status updated to "invalidated".',
+                'status' => $petition->status
+            ]);
+        }
+
 
         return response()->json([
-            'message' => 'The difference between upvotes and downvotes is 5 or less. Petition status updated to "Invalidated".',
+            'message' => 'No change',
             'difference' => $difference,
             'status' => $petition->status
         ]);

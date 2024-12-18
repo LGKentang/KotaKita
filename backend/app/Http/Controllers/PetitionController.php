@@ -123,7 +123,7 @@ class PetitionController extends Controller
 
     public function index(): JsonResponse
     {
-        $petitions = Petition::all();
+        $petitions = Petition::where('status', '!=', 'Closed')->get();
     
         foreach ($petitions as $petition) {
             if ($petition->institute_id) {
