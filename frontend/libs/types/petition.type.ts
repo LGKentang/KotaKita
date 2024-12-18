@@ -11,6 +11,7 @@ export interface IPetition {
     thumbnail_url: string;
     created_at: string; 
     updated_at: string;
+    institute_name: string;
 }
 
 export interface PetitionForm {

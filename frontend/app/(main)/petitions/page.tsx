@@ -254,7 +254,7 @@ const Petition: React.FC = () => {
 
                                 <h2 className="text-2xl font-bold text-gray-800 mb-2">{petition.title}</h2>
                                 <p className="text-gray-600 mb-1">
-                                    Status: <span className="font-medium">{petition.status}</span>
+                                    Status: <span className="font-medium">{petition.status == "Accepted" ? "Accepted by " + petition.institute_name : petition.status}</span>
                                 </p>
                                 <p className="text-gray-600 mb-4">
                                     Submitted on: <span className="font-medium">{petition.submissionDate}</span>

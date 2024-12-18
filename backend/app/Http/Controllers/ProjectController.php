@@ -11,6 +11,8 @@ use Illuminate\Support\Str;
 class ProjectController extends Controller
 {
 
+    // public function
+
     public function index(): JsonResponse
     {
         $projects = Project::all();
