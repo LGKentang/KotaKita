@@ -10,6 +10,7 @@ const nextConfig = {
       { protocol: 'https', hostname: 'banner2.cleanpng.com' },
       { protocol: 'https', hostname: 'encrypted-tbn0.gstatic.com' },
       { protocol: 'https', hostname: 'kotakita-budsase2cdgzabct.eastasia-01.azurewebsites.net' },
+      { protocol: 'https', hostname: 'kotakita-v2-cwfthkfudedfbkhe.eastasia-01.azurewebsites.net' },
     ],
   },
   redirects: () => {
