@@ -5,11 +5,11 @@ import { AddProject } from '@/libs/actions/projects.action';
 import { useRouter } from 'next/navigation';
 export default function CreateProject() {
   const [loading, setLoading] = useState(false);
+  const route = useRouter();
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
-    const route = useRouter();
 
     try {
       const formData = new FormData(e.target as HTMLFormElement);
