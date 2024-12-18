@@ -27,7 +27,7 @@ export default function InstituteDashboard() {
         console.log(user);
         try {
           console.log(user.institute_id);
-          console.log(user.id)
+          console.log(user.id);
           const fetchInstitute = await GetInstitute(user.institute_id!);
           const fetchPetitions = await GetAllPetitions();
           const fetchProjects = await GetProjects();
@@ -37,10 +37,10 @@ export default function InstituteDashboard() {
           setProjects(fetchProjects);
 
           const filteredProjects = fetchProjects.filter(
-            (project: Project) => project.instituteId === fetchInstitute.id
+            (project: Project) => project.instituteId === fetchInstitute.id,
           );
           const offerList = fetchPetitions.filter(
-            (petition: Post) => petition.upvotes.length >= 5
+            (petition: Post) => petition.status == 'Open for consideration's,
           );
 
           setFilteredProjects(filteredProjects);
@@ -54,47 +54,6 @@ export default function InstituteDashboard() {
     }
   }, [user]);
 
-
-  // useEffect(() => {
-  //   if (!user || !user.institute_id) {
-  //     setError('User or instituteId is missing.');
-  //     setLoading(false);
-  //     return;
-  //   }
-
-  //   const fetchData = async () => {
-  //     try {
-  //       setLoading(true);
-  //       const fetchInstitute = await GetInstitute(user.institute_id!);
-  //       const fetchPetitions = await GetAllPetitions();
-  //       const fetchProjects = await GetProjects();
-
-  //       setInstitute(fetchInstitute);
-  //       setPetitions(fetchPetitions);
-  //       setProjects(fetchProjects);
-
-  //       // Filter data after fetching
-  //       const filteredProjects = fetchProjects.filter(
-  //         (project: Project) => project.instituteId === fetchInstitute.id
-  //       );
-  //       const offerList = fetchPetitions.filter(
-  //         (petition: Post) => petition.upvotes.length >= 5
-  //       );
-
-  //       setFilteredProjects(filteredProjects);
-  //       setFilteredPetition(offerList);
-  //       setLoading(false);
-  //     } catch (err) {
-  //       setError('Error fetching data');
-  //       setLoading(false);
-  //       console.error('Error fetching data:', err);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, [user]);
-
-
   return (
     <div className="flex min-h-full flex-col justify-between gap-5 bg-gray-50 p-6">
       {/* Institute Profile */}
@@ -106,13 +65,18 @@ export default function InstituteDashboard() {
             className="h-24 w-24 rounded-full object-cover"
           />
           <div>
-            <h1 className="text-2xl font-bold text-gray-800">{institute.name}</h1>
+            <h1 className="text-2xl font-bold text-gray-800">
+              {institute.name}
+            </h1>
             <p className="text-gray-600">{institute.slogan}</p>
             <p className="text-sm text-gray-500">
               Founded on: {institute.founded_on}
             </p>
             <p className="text-sm text-gray-500">
               Contact: {institute.contact_number}
+            </p>
+            <p className="text-sm text-gray-500">
+              Impact: {institute.impact_description}
             </p>
           </div>
         </section>

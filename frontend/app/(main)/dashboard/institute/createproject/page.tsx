@@ -2,14 +2,14 @@
 
 import { FormEvent, useState } from 'react';
 import { AddProject } from '@/libs/actions/projects.action';
-
+import { useRouter } from 'next/navigation';
 export default function CreateProject() {
   const [loading, setLoading] = useState(false);
-
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
+    const route = useRouter();
 
     try {
       const formData = new FormData(e.target as HTMLFormElement);
@@ -49,8 +49,8 @@ export default function CreateProject() {
         return;
       }
 
-
-      const res = await AddProject(projectData,token );
+      const res = await AddProject(projectData, token);
+      route.push('/dashboard/instiitute');
 
       alert('Project created successfully!');
       console.log('Response:', res);
