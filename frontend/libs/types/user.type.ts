@@ -2,7 +2,7 @@ export interface User {
   id: number;
   email: string;
   name: string;
-  instituteId?: number;
+  institute_id?: number;
   date_of_birth?: Date;
   phone_number?: string;
   profile_picture_url?: string;

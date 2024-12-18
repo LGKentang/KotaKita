@@ -34,7 +34,7 @@ export function Wrapper({ children }: { children: ReactNode }) {
     if (!token) return;
     getUser(token)
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         setUser(data);
       })
       .catch((err) => {
